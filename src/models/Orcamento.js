@@ -26,7 +26,7 @@ class Orcamento extends Model {
 
     static associate(models) {
         this.belongsTo(models.usuario, { as: 'usuario', foreignKey: { name: 'usuarioId', allowNull: false, validate: { notNull: { msg: 'O Usuário deve ser preenchido!' } } } });
-        this.belongsTo(models.usuario, { as: 'categoria', foreignKey: { name: 'categoriaId', allowNull: false, validate: { notNull: { msg: 'A Categoria deve ser preenchida!' } } } });
+        this.hasMany(models.orcamentoCategoria, { as: {singula: 'orcamentoCategoria', plural: 'orcamentosCategorias'}, onDelete: 'CASCADE', onUpdate: 'CASCADE'});
         
     }
 }

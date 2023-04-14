@@ -19,8 +19,9 @@ class OrcamentoCategoria extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.usuario, { as: 'categoria', foreignKey: { name: 'categoriaId', allowNull: false, validate: { notNull: { msg: 'A Categoria deve ser preenchida!' } } } });
-        this.belongsTo(models.usuario, { as: 'orcamento', foreignKey: { name: 'orcamentoId', allowNull: false, validate: { notNull: { msg: 'O Orcamento deve ser preenchido!' } } } });
+        this.removeAttribute('id');
+        this.belongsTo(models.usuario, { as: 'categoria', foreignKey: { name: 'categoriaId', primarykey:true, allowNull: false, validate: { notNull: { msg: 'A Categoria deve ser preenchida!' } } } });
+        this.belongsTo(models.usuario, { as: 'orcamento', foreignKey: { name: 'orcamentoId', primarykey:true, allowNull: false, validate: { notNull: { msg: 'O Orcamento deve ser preenchido!' } } } });
     }
 }
 
