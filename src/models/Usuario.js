@@ -1,3 +1,5 @@
+//Teognes
+
 import { Model, DataTypes } from "sequelize";
 
 class Usuario extends Model {

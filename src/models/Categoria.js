@@ -1,3 +1,5 @@
+//Teognes
+
 import { Model, DataTypes } from "sequelize";
 
 class Categoria extends Model {
@@ -20,13 +22,13 @@ class Categoria extends Model {
             descricao: {
                 type: DataTypes.STRING,
                 validate: {
-                    len: { args: [0, 50], msg: "A descrição deve ter entre 2 e 50 caracteres!" }
+                    len: { args: [0, 50], msg: "A descrição deve ter no maximo 50 caracteres!" }
                 }
             },
             observacao: {
                 type: DataTypes.STRING,
                 validate: {
-                    len: { args: [0, 50], msg: "A observação deve ter entre 2 e 50 caracteres!" }
+                    len: { args: [0, 50], msg: "A descrição deve ter no maximo 50 caracteres!" }
                 }
             }
         }, { sequelize, modelName: 'categoria', tableName: 'categorias' })

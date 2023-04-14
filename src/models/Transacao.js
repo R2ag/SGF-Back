@@ -1,3 +1,5 @@
+//Rafael
+
 import { Model, DataTypes } from "sequelize";
 
 class Transacao extends Model {
@@ -25,9 +27,9 @@ class Transacao extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.usuario, { as: 'conta', foreignKey: { name: 'contaId', allowNull: false, validate: { notNull: { msg: 'A Conta do Usuário deve ser preenchida!' } } } });
-        this.belongsTo(models.usuario, { as: 'favorecido', foreignKey: { name: 'favorecidoId', allowNull: false, validate: { notNull: { msg: 'O favorecido deve ser preenchido!' } } } });
-        this.belongsTo(models.usuario, { as: 'categoria', foreignKey: { name: 'categoriaId', allowNull: false, validate: { notNull: { msg: 'A Categoria deve ser preenchida!' } } } });
+        this.belongsTo(models.conta, { as: 'conta', foreignKey: { name: 'contaId', allowNull: false, validate: { notNull: { msg: 'A Conta do Usuário deve ser preenchida!' } } } });
+        this.belongsTo(models.favorecido, { as: 'favorecido', foreignKey: { name: 'favorecidoId', allowNull: false, validate: { notNull: { msg: 'O favorecido deve ser preenchido!' } } } });
+        this.belongsTo(models.categoria, { as: 'categoria', foreignKey: { name: 'categoriaId', allowNull: false, validate: { notNull: { msg: 'A Categoria deve ser preenchida!' } } } });
     }
 }
 

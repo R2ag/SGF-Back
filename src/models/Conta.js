@@ -1,3 +1,5 @@
+//Rafael
+
 import { Model, DataTypes } from "sequelize";
 
 class Conta extends Model {
@@ -19,7 +21,7 @@ class Conta extends Model {
             descricao: {
                 type: DataTypes.STRING,
                 validate: {
-                    len: { args: [0, 50], msg: "A descrição deve ter entre 2 e 50 caracteres!" }
+                    len: { args: [0, 50], msg: "A descrição deve ter no maximo 50 caracteres!" }
                 }
             },
             saldo: {

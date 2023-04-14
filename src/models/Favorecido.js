@@ -1,3 +1,5 @@
+//Rafael
+
 import { Model, DataTypes } from "sequelize";
 
 class Favorecido extends Model {
@@ -20,8 +22,14 @@ class Favorecido extends Model {
             cpfOuCnpj: {
                 type: DataTypes.STRING,
                 validate: {
-                    notEmpty: { msg: "CPF do Favorecido deve ser preenchido!" },
-                    is: { args: ["[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}"], msg: "CPF do Favorecido deve seguir o padrão NNN.NNN.NNN-NN!" },
+                    len:{
+                        args: [
+                            [11,11],
+                            [14,14]
+                        ],
+                        msg: "O Cpf deve ter 11 caracteres e o cnpj deve ter 14 caracteres"
+                    },
+                    isNumeric: true, msg:"Digite apenas os numeros" 
                 }
             },
             email: {
