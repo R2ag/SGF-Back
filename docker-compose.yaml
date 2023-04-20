@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secreto
+      POSTGRES_DB: sgf-api
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: rlag@outlook.com
+      PGADMIN_DEFAULT_PASSWORD: secreto
+    ports:
+      - "8080:80"
+    networks:
+      - backend
+  
+  node:
+    image: node:lts-slim
+    restart: always
+    ports:
+      - "3000:3000"
+    working_dir: "/home/node/app"
+    volumes:
+      - ./:/home/node/app
+    command: "npm start"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: "bridge"
+
