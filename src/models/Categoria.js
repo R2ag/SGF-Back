@@ -35,7 +35,7 @@ class Categoria extends Model {
     }
 
     static associate(models) {
-
+        this.belongsTo(models.tipo, {as: 'tipo', foreignKey: {name: 'tipoId', allowNull: false, validate: {notNull: {msg: 'O Tipo da Categoria deve ser informado.'}}}});
     }
 }
 

@@ -33,7 +33,7 @@ services:
     working_dir: "/home/node/app"
     volumes:
       - ./:/home/node/app
-    command: "npm start"
+    command: "npm run dev"
     networks:
       - backend
 

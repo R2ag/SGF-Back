@@ -34,7 +34,7 @@ class Conta extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.usuario, { as: 'usuario', foreignKey: { name: 'usuarioId', allowNull: false, validate: { notNull: { msg: 'A Conta do Usuário deve ser preenchido!' } } } });
+        this.belongsTo(models.usuario, { as: 'usuario', foreignKey: { name: 'usuarioId', allowNull: false, validate: { notNull: { msg: 'O Usuário deve ser preenchido!' } } } });
     }
 }
 
