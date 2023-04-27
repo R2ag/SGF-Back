@@ -1,0 +1,4 @@
+1 - Atualizar o diagrama de classes:
+    - Remover o atributo 'tipo' da classe 'categoria';
+2 - Alterar o insert inicial;
+ 

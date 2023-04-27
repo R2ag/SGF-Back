@@ -1,4 +1,5 @@
 
+/*
 // Configuração do bando de dados no ambiente de teste
 export const dbConfig = {
   dialect: 'sqlite',
@@ -8,19 +9,19 @@ export const dbConfig = {
   }
 };
 
-/*
+*/
 // Configuração do bando de dados no ambiente de desenvolvimento
 export const dbConfig = {
   dialect: 'postgres',
-  host: 'localhost',
+  host: 'db',
   username: 'postgres',
-  password: 'postgres',
+  password: 'secreto',
   database: 'scv-backend-node-sequelize',
   define: {
     timestamps: true
   },
 };
-*/
+
 
 /*
 // Configuração do bando de dados no ambiente de produção
