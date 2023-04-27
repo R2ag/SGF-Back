@@ -1,34 +1,34 @@
-import {FavovecidoService} from "../services/FavorecidoService.js";
+import {FavorecidoService} from "../services/FavorecidoService.js";
 
 class FavorecidoController{
 
     static async findAll(req, res, next){
-        FavovecidoService.findAll()
+        FavorecidoService.findAll()
             .then(objs => res.json(objs))
             .catch(next);
         
     }
 
     static async findByPk(req, res){
-        FavovecidoService.findByPk(req)
+        FavorecidoService.findByPk(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
     static async create (req, res){
-        FavovecidoService.create(req)
+        FavorecidoService.create(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
     static async update(req, res){
-        FavovecidoService.update(req)
+        FavorecidoService.update(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
     static async delete(req, res, next){
-        FavovecidoService.delete(req)
+        FavorecidoService.delete(req)
             .then(obj => res.json(obj))
             .catch(next);
 

@@ -1,27 +1,27 @@
-import {UsuárioService} from "../services/UsuarioService.js";
+import {UsuarioService} from "../services/UsuarioService.js";
 
 class UsuarioController{
 
     static async findByPk(req, res){
-        UsuárioService.findByPk(req)
+        UsuarioService.findByPk(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
     static async create (req, res){
-        UsuárioService.create(req)
+        UsuarioService.create(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
     static async update(req, res){
-        UsuárioService.update(req)
+        UsuarioService.update(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
     static async delete(req, res, next){
-        UsuárioService.delete(req)
+        UsuarioService.delete(req)
             .then(obj => res.json(obj))
             .catch(next);
 
