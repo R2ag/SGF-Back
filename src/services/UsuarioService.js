@@ -2,11 +2,6 @@ import {Usuario} from "../models/Usuario.js";
 
 class UsuarioService{
 
-    static async findAll(){
-        const objs = await Usuario.findAll({include: {all: true, nested:true}});
-        return objs;
-    }
-
     static async findByPk(req){
         const {id} = req.params;
         const obj = await Usuario.findByPk(id, {include: {all: true, nested: true}});

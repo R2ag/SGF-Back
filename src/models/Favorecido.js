@@ -29,7 +29,9 @@ class Favorecido extends Model {
                         ],
                         msg: "O Cpf deve ter 11 caracteres e o cnpj deve ter 14 caracteres"
                     },
-                    isNumeric: true, msg:"Digite apenas os numeros" 
+                    isNumeric: {
+                        msg:"Digite apenas os numeros"
+                    }
                 }
             },
             email: {

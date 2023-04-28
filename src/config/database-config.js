@@ -16,7 +16,7 @@ export const dbConfig = {
   host: 'db',
   username: 'postgres',
   password: 'secreto',
-  database: 'scv-backend-node-sequelize',
+  database: 'sgf-api',
   define: {
     timestamps: true
   },

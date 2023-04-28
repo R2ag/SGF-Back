@@ -9,19 +9,19 @@ class CategoriaController{
         
     }
 
-    static async findByPk(req, res){
+    static async findByPk(req, res, next){
         CategoriaService.findByPk(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
-    static async create (req, res){
+    static async create (req, res, next){
         CategoriaService.create(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
-    static async update(req, res){
+    static async update(req, res, next){
         CategoriaService.update(req)
             .then(obj => res.json(obj))
             .catch(next);

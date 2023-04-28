@@ -7,7 +7,7 @@ class Tipo extends Model{
                 type: DataTypes.STRING,
                 allowNull:false
             }
-        })
+        }, {sequelize, modelName: 'tipo', tableName: 'tipo'})
     }
     static associate(models) {
 

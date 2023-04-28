@@ -35,29 +35,31 @@ function databaseInserts() {
 
     (async () => {
         await sequelize.sync({ force: true });
-
+        //Usuário
         const usuario1 = await Usuario.create({ nome: "Usuario1", cpf: "111.111.111-11", email: "usuario1@email.com", usuario: "usuario1", senha: "123456" });
         const usuario2 = await Usuario.create({ nome: "Usuario2", cpf: "222.222.222-22", email: "usuario2@email.com", usuario: "usuario2", senha: "123456" });
         const usuario3 = await Usuario.create({ nome: "Usuario3", cpf: "333.333.333-33", email: "usuario3@email.com", usuario: "usuario3", senha: "123456" });
         const usuario4 = await Usuario.create({ nome: "Usuario4", cpf: "444.444.444-44", email: "usuario4@email.com", usuario: "usuario4", senha: "123456" });
 
+        //Conta
         const conta1 = await Conta.create({ nome: "Conta1", tipo: "Tipo 01", descricao: "Descrição 0000", saldo: "1000", usuarioId: 1 });
         const conta2 = await Conta.create({ nome: "Conta2", tipo: "Tipo 02", descricao: "", saldo: "1500", usuarioId: 2 });
         const conta3 = await Conta.create({ nome: "Conta3", tipo: "Tipo 01", descricao: "Descrição 0000", saldo: "2000", usuarioId: 3 });
         const conta4 = await Conta.create({ nome: "Conta4", tipo: "Tipo 02", descricao: "Descrição 0000", saldo: "2500", usuarioId: 4 });
 
-        const favorecido1 = await Favorecido.create({ nome: "Favorecido1", ramo: "Ramo 0001", cpfOuCnpj: "111.111.111-11", email: "favorecido1@email.com" });
-        const favorecido2 = await Favorecido.create({ nome: "Favorecido2", ramo: "Ramo 0002", cpfOuCnpj: "222.222.222-22", email: "favorecido2@email.com" });
-        const favorecido3 = await Favorecido.create({ nome: "Favorecido3", ramo: "Ramo 0003", cpfOuCnpj: "333.333.333-33", email: "favorecido3@email.com" });
-        const favorecido4 = await Favorecido.create({ nome: "Favorecido4", ramo: "Ramo 0004", cpfOuCnpj: "444.444.444-44", email: "favorecido4@email.com" });
+        //Favorecido
+        const favorecido1 = await Favorecido.create({ nome: "Favorecido1", ramo: "Ramo 0001", cpfOuCnpj: "11111111111", email: "favorecido1@email.com" });
+        const favorecido2 = await Favorecido.create({ nome: "Favorecido2", ramo: "Ramo 0002", cpfOuCnpj: "22222222222", email: "favorecido2@email.com" });
+        const favorecido3 = await Favorecido.create({ nome: "Favorecido3", ramo: "Ramo 0003", cpfOuCnpj: "33333333333", email: "favorecido3@email.com" });
+        const favorecido4 = await Favorecido.create({ nome: "Favorecido4", ramo: "Ramo 0004", cpfOuCnpj: "44444444444", email: "favorecido4@email.com" });
 
         const tipo1 = await Tipo.create({nome: "entrada"});
         const tipo2 = await Tipo.create({nome: "saida"});
 
         const categoria1 = await Categoria.create({ nome: "Categoria1", tipoId: 1, descricao: "", observacao: "observação1" });
         const categoria2 = await Categoria.create({ nome: "Categoria2", tipoId: 2, descricao: "Descrição 0000", observacao: "" });
-        const categoria3 = await Categoria.create({ nome: "Categoria3", tipo: 1, descricao: "Descrição 0000", observacao: "observação3" });
-        const categoria4 = await Categoria.create({ nome: "Categoria4", tipo: 2, descricao: "Descrição 0000", observacao: "observação4" });
+        const categoria3 = await Categoria.create({ nome: "Categoria3", tipoId: 1, descricao: "Descrição 0000", observacao: "observação3" });
+        const categoria4 = await Categoria.create({ nome: "Categoria4", tipoId: 2, descricao: "Descrição 0000", observacao: "observação4" });
 
         const transacao1 = await Transacao.create({ valor: "7000", data: "2023-04-14", descricao: "Descrução 0000", categoriaId: 1, contaId: 1, favorecidoId: 1 });
         const transacao2 = await Transacao.create({ valor: "8000", data: "2023-04-12", descricao: "Descrução 0000", categoriaId: 2, contaId: 2, favorecidoId: 2 });

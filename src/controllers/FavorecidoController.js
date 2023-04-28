@@ -9,19 +9,19 @@ class FavorecidoController{
         
     }
 
-    static async findByPk(req, res){
+    static async findByPk(req, res, next){
         FavorecidoService.findByPk(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
-    static async create (req, res){
+    static async create (req, res, next){
         FavorecidoService.create(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
-    static async update(req, res){
+    static async update(req, res, next){
         FavorecidoService.update(req)
             .then(obj => res.json(obj))
             .catch(next);
