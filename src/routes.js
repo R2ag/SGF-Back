@@ -20,7 +20,7 @@ routes.get('/contas', ContaController.findAll);
 routes.get('/contas/:id', ContaController.findByPk);
 routes.post('/contas', ContaController.create);
 routes.put('/contas/:id', ContaController.update);
-routes.delete('/contas:id', ContaController.delete);
+routes.delete('/contas/:id', ContaController.delete);
 
 //Favorecido
 routes.get('/favorecidos', FavorecidoController.findAll);

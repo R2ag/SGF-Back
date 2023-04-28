@@ -1,4 +1,9 @@
 1 - Atualizar o diagrama de classes:
     - Remover o atributo 'tipo' da classe 'categoria';
-2 - Alterar o insert inicial;
+
+
+Correções:
+
+Categoria:
+    - inserir validação de nomes e tipo: Não permitir duas categorias com mesmo nome e tipo. 
  

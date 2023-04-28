@@ -25,7 +25,8 @@ class CategoriaService{
         const obj = await Categoria.findByPk(id, {include: {all: true, nested: true}});
         if (obj == null) throw 'Categoria Não encontrada';
         Object.assign(obj, {nome, descricao, observacao, tipoId: tipo.id});
-        return await obj.save; 
+        await obj.save();
+        return await Categoria.findByPk(id, {include: {all: true, nested: true}});
     }
 
     static async delete(req){

@@ -9,19 +9,19 @@ class ContaController{
         
     }
 
-    static async findByPk(req, res){
+    static async findByPk(req, res, next){
         ContaService.findByPk(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
-    static async create (req, res){
+    static async create (req, res, next){
         ContaService.create(req)
             .then(obj => res.json(obj))
             .catch(next);
     }
 
-    static async update(req, res){
+    static async update(req, res, next){
         ContaService.update(req)
             .then(obj => res.json(obj))
             .catch(next);

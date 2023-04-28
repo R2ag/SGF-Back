@@ -26,7 +26,7 @@ class ContaService{
         const obj = await Conta.findByPk(id, {include: {all: true, nested: true}});
         if (obj == null) throw 'Conta Não Encontrada.';
         Object.assign(obj, {nome, tipo, descicao, saldo, usuarioId: usuario.id});
-        return await obj.save;
+        return await obj.save();
     }
 
     static async delete(req){
