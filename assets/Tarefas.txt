@@ -4,6 +4,9 @@
 
 Correções:
 
-Categoria:
-    - inserir validação de nomes e tipo: Não permitir duas categorias com mesmo nome e tipo. 
+    Categoria:
+        - inserir validação de nomes e tipo: Não permitir duas categorias com mesmo nome e tipo. 
+    Favorecido:
+        -Corrigir validation CPF/cnpj
+
  
