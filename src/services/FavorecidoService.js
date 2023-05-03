@@ -25,7 +25,7 @@ class FavorecidoService{
         const obj =  await Favorecido.findByPk(id, {include: {all: true, nested: true}});
         if (obj == null) throw 'Favorecido Não encontrado';
         Object.assign(obj, { nome, ramo, cpfOuCnpj, email });
-        return await obj.save;
+        return await obj.save();
     }
 
     static async delete(req){

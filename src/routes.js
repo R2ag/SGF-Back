@@ -27,7 +27,7 @@ routes.get('/favorecidos', FavorecidoController.findAll);
 routes.get('/favorecidos/:id', FavorecidoController.findByPk);
 routes.post('/favorecidos', FavorecidoController.create);
 routes.put('/favorecidos/:id', FavorecidoController.update);
-routes.delete('/favortecidos/:id', FavorecidoController.delete);
+routes.delete('/favorecidos/:id', FavorecidoController.delete);
 
 //Tipo
 routes.get('/tipos', TipoController.findAll);
@@ -36,7 +36,7 @@ routes.get('/tipos', TipoController.findAll);
 routes.get('/usuarios/:id', UsuarioController.findByPk);
 routes.post('/usuarios', UsuarioController.create);
 routes.put('/usuarios/:id', UsuarioController.update);
-routes.delete('/usuarios:id', UsuarioController.delete);
+routes.delete('/usuarios/:id', UsuarioController.delete);
 
 
 

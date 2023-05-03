@@ -21,7 +21,7 @@ class UsuarioService{
         const obj = await Usuario.findByPk(id, {include: {all: true, nested: true}});
         if (obj == null) throw 'Usuario Não Encontrada.';
         Object.assign(obj, {usuario, senha, nome, cpf, email});
-        return await obj.save;
+        return await obj.save();
     }
 
     static async delete(req){
