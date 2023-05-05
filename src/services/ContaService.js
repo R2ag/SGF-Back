@@ -14,18 +14,18 @@ class ContaService{
     }
 
     static async create(req){
-        const {nome, tipo, descicao, saldo, usuario} = req.body;
-        const obj = await Conta.create({nome, tipo, descicao, saldo, usuarioId: usuario.id});
+        const {nome, tipo, descricao, saldo, usuario} = req.body;
+        const obj = await Conta.create({nome, tipo, descricao, saldo, usuarioId: usuario.id});
         return await Conta.findByPk(obj.id, {include: {all: true, nested: true}});
 
     }
 
     static async update(req){
         const {id} = req.params;
-        const {nome, tipo, descicao, saldo, usuario} = req.body;
+        const {nome, tipo, descricao, saldo, usuario} = req.body;
         const obj = await Conta.findByPk(id, {include: {all: true, nested: true}});
         if (obj == null) throw 'Conta Não Encontrada.';
-        Object.assign(obj, {nome, tipo, descicao, saldo, usuarioId: usuario.id});
+        Object.assign(obj, {nome, tipo, descricao, saldo, usuarioId: usuario.id});
         return await obj.save();
     }
 

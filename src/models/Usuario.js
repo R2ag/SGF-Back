@@ -16,7 +16,12 @@ class Usuario extends Model {
                 type: DataTypes.STRING,
                 validate: {
                     notEmpty: { msg: "CPF do Usuário deve ser preenchido!" },
-                    is: { args: ["[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}"], msg: "CPF do Usuário deve seguir o padrão NNN.NNN.NNN-NN!" },
+                    isCpf(value) {
+                        const cpfRegex = /^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$/;
+                        if (!cpfRegex.test(value)) {
+                          throw new Error('O campo documento deve ser um CPF válido');
+                        }
+                      }
                 }
             },
             email: {

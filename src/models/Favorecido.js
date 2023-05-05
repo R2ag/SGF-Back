@@ -22,15 +22,11 @@ class Favorecido extends Model {
             cpfOuCnpj: {
                 type: DataTypes.STRING,
                 validate: {
-                    len:{
-                        args: [
-                            [11,11],
-                            [14,14]
-                        ],
-                        msg: "O Cpf deve ter 11 caracteres e o cnpj deve ter 14 caracteres"
-                    },
-                    isNumeric: {
-                        msg:"Digite apenas os numeros"
+                    isCpfOrCnpj(value) {
+                        const regex = /^(?:(\d{3})\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})$/;
+                        if (!regex.test(value)) {
+                            throw new Error('O campo documento deve ser um CPF ou CNPJ válido');
+                        }
                     }
                 }
             },

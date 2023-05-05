@@ -9,7 +9,8 @@ class Categoria extends Model {
                 type: DataTypes.STRING,
                 validate: {
                     notEmpty: { msg: "Nome da Categoria deve ser preenchida!" },
-                    len: { args: [2, 30], msg: "Nome da Categoria deve ter entre 2 e 30 caracteres!" }
+                    len: { args: [2, 30], msg: "Nome da Categoria deve ter entre 2 e 30 caracteres!" },
+                    
                 }
             },
             descricao: {

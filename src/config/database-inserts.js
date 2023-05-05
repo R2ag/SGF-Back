@@ -48,10 +48,10 @@ function databaseInserts() {
         const conta4 = await Conta.create({ nome: "Conta4", tipo: "Tipo 02", descricao: "Descrição 0000", saldo: "2500", usuarioId: 4 });
 
         //Favorecido
-        const favorecido1 = await Favorecido.create({ nome: "Favorecido1", ramo: "Ramo 0001", cpfOuCnpj: "11111111111", email: "favorecido1@email.com" });
-        const favorecido2 = await Favorecido.create({ nome: "Favorecido2", ramo: "Ramo 0002", cpfOuCnpj: "22222222222", email: "favorecido2@email.com" });
-        const favorecido3 = await Favorecido.create({ nome: "Favorecido3", ramo: "Ramo 0003", cpfOuCnpj: "33333333333", email: "favorecido3@email.com" });
-        const favorecido4 = await Favorecido.create({ nome: "Favorecido4", ramo: "Ramo 0004", cpfOuCnpj: "44444444444", email: "favorecido4@email.com" });
+        const favorecido1 = await Favorecido.create({ nome: "Favorecido1", ramo: "Ramo 0001", cpfOuCnpj: "111.111.111-11", email: "favorecido1@email.com" });
+        const favorecido2 = await Favorecido.create({ nome: "Favorecido2", ramo: "Ramo 0002", cpfOuCnpj: "222.222.222-22", email: "favorecido2@email.com" });
+        const favorecido3 = await Favorecido.create({ nome: "Favorecido3", ramo: "Ramo 0003", cpfOuCnpj: "33.333.333/0001-00", email: "favorecido3@email.com" });
+        const favorecido4 = await Favorecido.create({ nome: "Favorecido4", ramo: "Ramo 0004", cpfOuCnpj: "44.444.444/0001-00", email: "favorecido4@email.com" });
 
         const tipo1 = await Tipo.create({nome: "entrada"});
         const tipo2 = await Tipo.create({nome: "saida"});

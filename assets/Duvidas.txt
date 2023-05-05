@@ -1,2 +1,2 @@
-1 - Como Lidar com a classe tipo?
+1 - Como Lidar com a classe tipo? - Implementado, validar solução.
 2 - Como associar tudo ao usuário?
