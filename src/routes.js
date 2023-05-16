@@ -4,7 +4,9 @@ import {FavorecidoController} from './controllers/FavorecidoController.js';
 import {CategoriaController} from './controllers/CategoriaController.js';
 import {ContaController} from './controllers/ContaController.js';
 import { TipoController } from "./controllers/TipoController.js";
-import { UsuarioController} from "./controllers/UsuarioController.js"
+import { UsuarioController} from "./controllers/UsuarioController.js";
+import { TransacaoController} from "./controllers/TransacaoController.js";
+
 
 const routes = express.Router();
 
@@ -38,6 +40,12 @@ routes.post('/usuarios', UsuarioController.create);
 routes.put('/usuarios/:id', UsuarioController.update);
 routes.delete('/usuarios/:id', UsuarioController.delete);
 
+//Transação
+routes.get('/transacoes', TransacaoController.findAll);
+routes.get('/transacoes/:id', TransacaoController.findByPk);
+routes.post('/transacao', TransacaoController.create);
+routes.put('/transacao/:id', TransacaoController.update);
+routes.delete('/transacao/:id', TransacaoController.delete);
 
 
 export default routes;
