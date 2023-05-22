@@ -40,6 +40,13 @@ class ContaService{
             throw 'Não é possivel excluir uma conta que esteja em uso.';
         }
     }
+
+    static async atualizarSaldo(idConta, valorTransacao){
+        const obj = await Conta.findByPk(idConta);
+        if(obj == null) throw 'Conta não encontrada';
+        obj.saldo += valorTransacao;
+        return await obj.save();
+    }
 }
 
 export {ContaService};

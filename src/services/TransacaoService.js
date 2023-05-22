@@ -21,7 +21,8 @@ class TransacaoService{
 
         if(favorecido == null) throw 'Deve ser informado o participante dessa transação'
 
-
+        //Normaliza o valor recebido
+        valor = Math.abs(valor);
         
         const obj = await Transacao.create({data, descricao, valor, contaId: conta.id, categoriaId: categoria.id, favorecidoId: favorecido.id});
 
@@ -36,10 +37,18 @@ class TransacaoService{
 
     }
 
+    static async normalizarValoresTransacao(obj){
+        if(obj.categoria.tipo.nome == 'Entrada'){
+            
+        }
+    }
 
     static async regrasDeNegocio(obj){
         //atualizar saldo
-        //veriicar se existe orçamento 
+        //veriicar se existe orçamento
+            //se existir orçamento: Atualizar valor disponivel
+        //retornar orçamento e valor 
+  
     }
 
 }
