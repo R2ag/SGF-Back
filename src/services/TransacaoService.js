@@ -37,11 +37,6 @@ class TransacaoService{
 
     }
 
-    static async normalizarValoresTransacao(obj){
-        if(obj.categoria.tipo.nome == 'Entrada'){
-            
-        }
-    }
 
     static async regrasDeNegocio(obj){
         //atualizar saldo
