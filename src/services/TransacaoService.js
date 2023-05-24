@@ -30,11 +30,14 @@ class TransacaoService{
 
         try{
             const obj = await Transacao.create({data, descricao, valor, contaId: conta.id, categoriaId: categoria.id, favorecidoId: favorecido.id}, {transaction: t});
-            await ContaService.atualizarSaldo(obj.contaId, obj.valor,obj.categoria.tipo.id, t);
+            
+            const objCriado = await Transacao.findByPk(obj.id, {include: {all: true, nested: true}}, {transaction: t});
+
+            
 
             await t.commit();
 
-            return await this.regrasDeNegocio(await Transacao.findByP(obj.id, {include: {all: true, nested: true}}));
+            return await this.regrasDeNegocio();
         }catch{
             
             await t.rollback();
@@ -54,11 +57,11 @@ class TransacaoService{
     }
 
 
-    static async regrasDeNegocio(obj){
-        //atualizar saldo
+    static async regrasDeNegocio(obj, transaction ){
+        await ContaService.atualizarSaldo(obj.contaId, obj.valor,obj.categoria.tipo.id, transaction);
         //veriicar se existe orçamento
             //se existir orçamento: Atualizar valor disponivel
-        //retornar orçamento e valor 
+        //retornar orçamento e valor disponivel
   
     }
 

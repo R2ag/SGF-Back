@@ -16,7 +16,7 @@ class TransacaoController{
 
     static async create(req, res, next){
         TransacaoService.create(req)
-            .then(obj => res.json(obj))
+            .then(obj => res.status(201).json(obj))
             .catch(next);
     }
 

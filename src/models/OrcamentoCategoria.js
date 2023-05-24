@@ -16,6 +16,9 @@ class OrcamentoCategoria extends Model {
                 validate: {
                     isFloat: { msg: "O valor deve ser preenchido com um valor decimal!" }
                 }
+            },
+            valorUtilizado:{
+                type: DataTypes.DOUBLE
             }
         }, { sequelize, modelName: 'orcamentoCategoria', tableName: 'orcamentosCategorias' })
     }
