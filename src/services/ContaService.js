@@ -41,12 +41,12 @@ class ContaService{
         }
     }
 
-    static async atualizarSaldo(idConta, valorTransacao, idTipoTransacao){
-        const obj = await Conta.findByPk(idConta);
+    static async atualizarSaldo(idConta, valorTransacao, idTipoTransacao, transaction){
+        const obj = await Conta.findByPk(idConta, {transaction} );
         if(obj == null) throw 'Conta não encontrada';
         //verifica se a transação é uma entrada e atualiza o saldo.
         idTipoTransacao == 1 ? obj.saldo += valorTransacao: obj.saldo -= valorTransacao;
-        return await obj.save();
+        return await obj.save(transaction);
     }
 }
 

@@ -1,4 +1,6 @@
+import { Sequelize } from "sequelize";
 import {Transacao} from "../models/Transacao.js";
+import { ContaService } from "./ContaService.js";
 
 class TransacaoService{
     static async findAll(){
@@ -24,9 +26,23 @@ class TransacaoService{
         //Normaliza o valor recebido
         valor = Math.abs(valor);
         
-        const obj = await Transacao.create({data, descricao, valor, contaId: conta.id, categoriaId: categoria.id, favorecidoId: favorecido.id});
+        const t = await Sequelize.transaction();
 
-        return await this.regrasDeNegocio(await Transacao.findByP(obj.id, {include: {all: true, nested: true}}));
+        try{
+            const obj = await Transacao.create({data, descricao, valor, contaId: conta.id, categoriaId: categoria.id, favorecidoId: favorecido.id}, {transaction: t});
+            await ContaService.atualizarSaldo(obj.contaId, obj.valor,obj.categoria.tipo.id, t);
+
+            await t.commit();
+
+            return await this.regrasDeNegocio(await Transacao.findByP(obj.id, {include: {all: true, nested: true}}));
+        }catch{
+            
+            await t.rollback();
+            throw "Erro ao cirar a Transação.";
+        }
+        
+
+
     }
 
     static async update(req){
