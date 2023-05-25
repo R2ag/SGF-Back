@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import {Transacao} from "../models/Transacao.js";
 import { ContaService } from "./ContaService.js";
+import { OrcamentoService } from "./OrcamentoService.js";
 
 class TransacaoService{
     static async findAll(){
@@ -33,19 +34,17 @@ class TransacaoService{
             
             const objCriado = await Transacao.findByPk(obj.id, {include: {all: true, nested: true}}, {transaction: t});
 
-            
+            const messageResponse = new MessageResponseDTO(await this.regrasDeNegocio(objCriado, t))
 
             await t.commit();
 
-            return await this.regrasDeNegocio();
+            return messageResponse;
         }catch{
             
             await t.rollback();
             throw "Erro ao cirar a Transação.";
         }
         
-
-
     }
 
     static async update(req){
@@ -58,9 +57,14 @@ class TransacaoService{
 
 
     static async regrasDeNegocio(obj, transaction ){
-        await ContaService.atualizarSaldo(obj.contaId, obj.valor,obj.categoria.tipo.id, transaction);
+        await ContaService.atualizarSaldo(obj.contaId, obj.valor, obj.categoria.tipo.id, transaction);
         //veriicar se existe orçamento
-            //se existir orçamento: Atualizar valor disponivel
+        const orcamentoId = OrcamentoService.findByPeriodAndCategory(obj.data, obj.categoriaId);
+        
+        //se existir orçamento: Atualizar valor disponivel
+        if (orcamentoId != null){
+            
+        }
         //retornar orçamento e valor disponivel
   
     }
