@@ -10,13 +10,13 @@ class Orcamento extends Model {
                 validate: {
                   isDate: { msg: "Data deve ser preenchida no formato yyyy-MM-dd!" }
                 }
-              },
-              dataFinal: { 
+            },
+            dataFinal: { 
                 type: DataTypes.DATEONLY, 
                 validate: {
                   isDate: { msg: "Data deve ser preenchida no formato yyyy-MM-dd!" }
                 }
-              },
+            },
             valorTotal: {
                 type: DataTypes.DOUBLE,
                 validate: {

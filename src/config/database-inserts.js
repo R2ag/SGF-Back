@@ -71,10 +71,10 @@ function databaseInserts() {
         const orcamento3 = await Orcamento.create({ dataInicio: "2023-04-01", dataFinal: "2023-06-01", valorTotal: "3000", usuarioId: 3});
         const orcamento4 = await Orcamento.create({ dataInicio: "2023-07-01", dataFinal: "2023-08-01", valorTotal: "1500", usuarioId: 4});
 
-        const orcamentoCategoria1 = await OrcamentoCategoria.create({ valor: "1000", descricao: "Descrição 0000", categoriaId: 1, orcamentoId: 1 });
-        const orcamentoCategoria2 = await OrcamentoCategoria.create({ valor: "2000", descricao: "Descrição 0000", categoriaId: 2, orcamentoId: 2 });
-        const orcamentoCategoria3 = await OrcamentoCategoria.create({ valor: "3000", descricao: "Descrição 0000", categoriaId: 3, orcamentoId: 3 });
-        const orcamentoCategoria4 = await OrcamentoCategoria.create({ valor: "1500", descricao: "Descrição 0000", categoriaId: 4, orcamentoId: 4 });
+        const orcamentoCategoria1 = await OrcamentoCategoria.create({ valor: "1000", descricao: "Descrição 0000", categoriaId: 1, orcamentoid: 1 });
+        const orcamentoCategoria2 = await OrcamentoCategoria.create({ valor: "2000", descricao: "Descrição 0000", categoriaId: 2, orcamentoid: 2 });
+        const orcamentoCategoria3 = await OrcamentoCategoria.create({ valor: "3000", descricao: "Descrição 0000", categoriaId: 3, orcamentoid: 3 });
+        const orcamentoCategoria4 = await OrcamentoCategoria.create({ valor: "1500", descricao: "Descrição 0000", categoriaId: 4, orcamentoid: 4 });
 
 
     })();

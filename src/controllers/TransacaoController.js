@@ -1,4 +1,4 @@
-import { TransacaoService } from "../services/TransacaoService"
+import { TransacaoService } from "../services/TransacaoService.js";
 
 
 class TransacaoController{

@@ -1,10 +1,12 @@
 class MessageResponseDTO {
-    constructor(message) {
-      this.message = message;
-    }
-  
-    getMessage() {
-      return this.message;
-    }
+  constructor(message) {
+    this.message = message;
   }
+  
+  getMessage() {
+    return this.message;
+  }
+}
+
+export {MessageResponseDTO};
   

@@ -20,13 +20,13 @@ class OrcamentoCategoria extends Model {
             valorUtilizado:{
                 type: DataTypes.DOUBLE
             }
-        }, { sequelize, modelName: 'orcamentoCategoria', tableName: 'orcamentosCategorias' })
+        }, { sequelize, modelName: "orcamentoCategoria", tableName: "orcamentoscategorias" })
     }
 
     static associate(models) {
         this.removeAttribute('id');
-        this.belongsTo(models.categoria, { as: 'categoria', foreignKey: { name: 'categoriaId', primarykey:true, allowNull: false, validate: { notNull: { msg: 'A Categoria deve ser preenchida!' } } } });
-        this.belongsTo(models.orcamento, { as: 'orcamento', foreignKey: { name: 'orcamentoId', primarykey:true, allowNull: false, validate: { notNull: { msg: 'O Orcamento deve ser preenchido!' } } } });
+        this.belongsTo(models.categoria, { as: 'categoria', foreignKey: { name: "categoriaId", primarykey:true, allowNull: false, validate: { notNull: { msg: 'A Categoria deve ser preenchida!' } } } });
+        this.belongsTo(models.orcamento, { as: 'orcamento', foreignKey: { name: "orcamentoid", primarykey:true, allowNull: false, validate: { notNull: { msg: 'O Orcamento deve ser preenchido!' } } } });
     }
 }
 

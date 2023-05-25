@@ -43,9 +43,9 @@ routes.delete('/usuarios/:id', UsuarioController.delete);
 //Transação
 routes.get('/transacoes', TransacaoController.findAll);
 routes.get('/transacoes/:id', TransacaoController.findByPk);
-routes.post('/transacao', TransacaoController.create);
-routes.put('/transacao/:id', TransacaoController.update);
-routes.delete('/transacao/:id', TransacaoController.delete);
+routes.post('/transacoes', TransacaoController.create);
+routes.put('/transacoes/:id', TransacaoController.update);
+routes.delete('/transacoes/:id', TransacaoController.delete);
 
 
 export default routes;
