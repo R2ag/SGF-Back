@@ -50,9 +50,9 @@ class TransacaoService {
                         data,
                         descricao,
                         valor: valorNormalizado,
-                        contaId: conta.id,
-                        categoriaId: categoria.id,
-                        favorecidoId: favorecido.id
+                        conta_id: conta.id,
+                        categoria_id: categoria.id,
+                        favorecido_id: favorecido.id
                     },
                     { transaction: t }
                 );
@@ -74,13 +74,24 @@ class TransacaoService {
         }
     }
 
+    static async update(req){
+        try {
+            const { id } = req.params;
+            const { data, descricao, valor, conta, categoria, favorecido } = req.body;
+        } catch (error) {
+            console.error("Erro ao atualizar a transação", error);
+            throw error;
+        }
+
+    }
+
     static async regrasDeNegocio(obj, transaction) {
         try {
             // Atualiza o saldo na conta
-            await ContaService.atualizarSaldo(obj.contaId, obj.valor, obj.categoria.tipo.id, transaction);
+            await ContaService.atualizarSaldo(obj.conta_id, obj.valor, obj.categoria.tipo.id, transaction);
 
             // Verificar se existe orçamento
-            const orcamentoId = await OrcamentoService.findByPeriodAndCategory(obj.data, obj.categoriaId);
+            const orcamentoId = await OrcamentoService.findByPeriodAndCategory(obj.data, obj.categoria_id);
 
             // Se existir orçamento: Atualizar valor disponivel
             if (orcamentoId !== null) {

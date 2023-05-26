@@ -42,7 +42,7 @@ class Conta extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.Usuario, {
+        this.belongsTo(models.usuario, {
             as: "usuario",
             foreignKey: {
                 name: "usuario_id",

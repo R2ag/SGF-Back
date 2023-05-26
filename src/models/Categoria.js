@@ -36,7 +36,7 @@ class Categoria extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.Tipo, {
+        this.belongsTo(models.tipo, {
             as: "tipo",
             foreignKey: {
                 name: "tipo_id",

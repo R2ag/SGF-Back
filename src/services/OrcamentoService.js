@@ -27,8 +27,8 @@ class OrcamentoService {
     static async findByPeriodAndCategory(data, categoriaId) {
         try {
             const orcamentoId = await Orcamento.sequelize.query(
-                "SELECT orcamentos.id FROM orcamentos JOIN orcamentosCategorias ON orcamentos.id = orcamentosCategorias.orcamentoId WHERE orcamentos.dataInicio <= :data AND orcamentos.dataFinal >= :data AND orcamentosCategorias.categoriaId = :categoriaId",
-                { replacements: { data: data, categoriaId: categoriaId }, type: Sequelize.QueryTypes.SELECT }
+                "SELECT orcamentos.id FROM orcamentos JOIN orcamentoscategorias ON orcamentos.id = orcamentoscategorias.orcamento_id WHERE orcamentos.data_inicio <= :data AND orcamentos.data_final >= :data AND orcamentoscategorias.categoria_id = :categoria_id",
+                { replacements: { data: data, categoria_id: categoriaId }, type: Sequelize.QueryTypes.SELECT }
             );
 
             return orcamentoId;
@@ -42,8 +42,8 @@ class OrcamentoService {
         try {
             const orcamentoCategoria = await OrcamentoCategoria.findOne({
                 where: {
-                    orcamentoId: idOrcamento,
-                    categoriaId: idCategoria
+                    orcamento_id: idOrcamento,
+                    categoria_id: idCategoria
                 }
             });
 
