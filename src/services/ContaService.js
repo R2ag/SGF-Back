@@ -25,7 +25,7 @@ class ContaService {
     static async create(req) {
         try {
             const { nome, tipo, descricao, saldo, usuario } = req.body;
-            const obj = await Conta.create({ nome, tipo, descricao, saldo, usuario_id: usuario.id });
+            const obj = await Conta.create({ nome, tipo, descricao, saldo, usuarioId: usuario.id });
             return await Conta.findByPk(obj.id, { include: { all: true, nested: true } });
         } catch (error) {
             console.error("Erro ao criar conta:", error);
@@ -39,7 +39,7 @@ class ContaService {
             const { nome, tipo, descricao, saldo, usuario } = req.body;
             const obj = await Conta.findByPk(id, { include: { all: true, nested: true } });
             if (obj == null) throw 'Conta não encontrada';
-            Object.assign(obj, { nome, tipo, descricao, saldo, usuario_id: usuario.id });
+            Object.assign(obj, { nome, tipo, descricao, saldo, usuarioId: usuario.id });
             await obj.save();
             return obj;
         } catch (error) {

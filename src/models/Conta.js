@@ -45,7 +45,7 @@ class Conta extends Model {
         this.belongsTo(models.usuario, {
             as: "usuario",
             foreignKey: {
-                name: "usuario_id",
+                name: "usuarioId",
                 allowNull: false,
                 validate: {
                     notNull: { msg: "O usuário deve ser preenchido!" }

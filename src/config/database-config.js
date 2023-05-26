@@ -18,7 +18,9 @@ export const dbConfig = {
   password: 'secreto',
   database: 'sgf-api',
   define: {
-    timestamps: true
+    timestamps: true,
+    freezeTableName: true,
+    underscored: true
   },
 };
 

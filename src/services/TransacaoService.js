@@ -74,7 +74,7 @@ class TransacaoService {
         }
     }
 
-    static async update(req){
+    static async update(req) {
         try {
             const { id } = req.params;
             const { data, descricao, valor, conta, categoria, favorecido } = req.body;
@@ -89,23 +89,27 @@ class TransacaoService {
         try {
             // Atualiza o saldo na conta
             await ContaService.atualizarSaldo(obj.conta_id, obj.valor, obj.categoria.tipo.id, transaction);
-
+    
             // Verificar se existe orçamento
-            const orcamentoId = await OrcamentoService.findByPeriodAndCategory(obj.data, obj.categoria_id);
-
-            // Se existir orçamento: Atualizar valor disponivel
-            if (orcamentoId !== null) {
-                const limiteCategoria = await OrcamentoService.atualizarValorUtilizado(
-                    orcamentoId,
-                    obj.categoria.id,
-                    obj.valor,
-                    transaction
-                );
-
-                return `Você ainda pode utilizar R$ ${limiteCategoria} para essa categoria.`;
+            const orcamentosId = await OrcamentoService.findByPeriodAndCategory(obj.data, obj.categoria_id);
+    
+            // Se existir orçamento: Atualizar valor disponível
+            if (orcamentosId.length > 0) {
+                let mensagem = '';
+                await Promise.all(orcamentosId.map(async orcamentoId => {
+                    const limiteDisponivel = await OrcamentoService.atualizarValorUtilizado(
+                        orcamentoId,
+                        obj.categoria_id,
+                        obj.valor,
+                        transaction
+                    );
+                    mensagem = mensagem.concat(`Você ainda pode utilizar R$ ${limiteDisponivel} para essa categoria no orçamento ${orcamentoId}. `);
+                }));
+    
+                return mensagem;
             }
-
-            // Retornar orçamento e valor disponivel
+    
+            // Retornar mensagem de que não existe orçamento cadastrado para o período e categoria
             return "Não existe orçamento cadastrado para o período e categoria!";
         } catch (error) {
             console.error("Erro ao aplicar regras de negócio da transação:", error);

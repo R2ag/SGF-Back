@@ -37,7 +37,7 @@ class Transacao extends Model {
         this.belongsTo(models.conta, { 
             as: "conta",
             foreignKey: {
-                name: "conta_id",
+                name: "contaId",
                 allowNull: false,
                 validate: {
                     notNull: { msg: "A conta do usuário deve ser preenchida!" } 
@@ -47,7 +47,7 @@ class Transacao extends Model {
         this.belongsTo(models.favorecido, {
             as: "favorecido",
             foreignKey: {
-                name: "favorecido_id",
+                name: "favorecidoId",
                 allowNull: false,
                 validate: {
                     notNull: { msg: "O favorecido deve ser preenchido!" } 
@@ -57,7 +57,7 @@ class Transacao extends Model {
         this.belongsTo(models.categoria, {
             as: "categoria",
             foreignKey: {
-                name: "categoria_id", 
+                name: "categoriaId", 
                 allowNull: false, 
                 validate: { 
                     notNull: { msg: "A categoria deve ser preenchida!" } 

@@ -6,19 +6,19 @@ class Orcamento extends Model {
     static init(sequelize) {
         super.init(
             {
-                data_inicio: {
+                dataInicio: {
                     type: DataTypes.DATEONLY,
                     validate: {
                         isDate: { msg: "A data deve ser preenchida no formato yyyy-MM-dd!" },
                     },
                 },
-                data_final: {
+                dataFinal: {
                     type: DataTypes.DATEONLY,
                     validate: {
                         isDate: { msg: "A data deve ser preenchida no formato yyyy-MM-dd!" },
                     },
                 },
-                valor_total: {
+                valorTotal: {
                     type: DataTypes.DOUBLE,
                     validate: {
                         isFloat: { msg: "O valor deve ser preenchido com um valor decimal!" },
@@ -37,7 +37,7 @@ class Orcamento extends Model {
         this.belongsTo(models.usuario, { 
             as: "usuario", 
             foreignKey: { 
-                name: "usuario_id", 
+                name: "usuarioId", 
                 allowNull: false, 
                 validate: { 
                     notNull: { msg: "O Usuário deve ser preenchido!" } 

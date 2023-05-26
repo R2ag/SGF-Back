@@ -21,7 +21,7 @@ class Favorecido extends Model {
                     len: { args: [2, 20], msg: "O ramo do favorecido deve ter entre 2 e 20 caracteres!" }
                 }
             },
-            cpf_cnpj: {
+            cpfOuCnpj: {
                 type: DataTypes.STRING,
                 validate: {
                     isCpfOrCnpj(value) {

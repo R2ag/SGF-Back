@@ -17,7 +17,7 @@ class OrcamentoCategoria extends Model {
                         isFloat: { msg: "O valor deve ser preenchido com um valor decimal!" },
                     },
                 },
-                valor_utilizado: {
+                valorUtilizado: {
                     type: DataTypes.DOUBLE,
                 },
             },
@@ -34,7 +34,7 @@ class OrcamentoCategoria extends Model {
         this.belongsTo(models.categoria, {
             as: "categoria",
             foreignKey: { 
-                name: "categoria_id",
+                name: "categoriaId",
                 primaryKey: true, 
                 allowNull: false, 
                 validate: { 
@@ -45,7 +45,7 @@ class OrcamentoCategoria extends Model {
         this.belongsTo(models.orcamento, {
             as: "orcamento",
             foreignKey: { 
-                name: "orcamento_id",
+                name: "orcamentoId",
                 primaryKey: true, 
                 allowNull: false, 
                 validate: { 
