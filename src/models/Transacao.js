@@ -27,37 +27,37 @@ class Transacao extends Model {
             },
             { 
                 sequelize, 
-                modelName: "Transacao", 
+                modelName: "transacao", 
                 tableName: "transacoes" 
             }
         );
     }
 
     static associate(models) {
-        this.belongsTo(models.Conta, { 
+        this.belongsTo(models.conta, { 
             as: "conta",
             foreignKey: {
-                name: "contaId",
+                name: "conta_id",
                 allowNull: false,
                 validate: {
                     notNull: { msg: "A conta do usuário deve ser preenchida!" } 
                 } 
             } 
         });
-        this.belongsTo(models.Favorecido, {
+        this.belongsTo(models.favorecido, {
             as: "favorecido",
             foreignKey: {
-                name: "favorecidoId",
+                name: "favorecido_id",
                 allowNull: false,
                 validate: {
                     notNull: { msg: "O favorecido deve ser preenchido!" } 
                 } 
             } 
         });
-        this.belongsTo(models.Categoria, {
+        this.belongsTo(models.categoria, {
             as: "categoria",
             foreignKey: {
-                name: "categoriaId", 
+                name: "categoria_id", 
                 allowNull: false, 
                 validate: { 
                     notNull: { msg: "A categoria deve ser preenchida!" } 

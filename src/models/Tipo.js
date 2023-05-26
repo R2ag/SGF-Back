@@ -11,7 +11,7 @@ class Tipo extends Model {
             },
             {
                 sequelize,
-                modelName: "Tipo",
+                modelName: "tipo",
                 tableName: "tipos"
             }
         );

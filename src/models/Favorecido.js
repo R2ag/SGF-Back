@@ -21,7 +21,7 @@ class Favorecido extends Model {
                     len: { args: [2, 20], msg: "O ramo do favorecido deve ter entre 2 e 20 caracteres!" }
                 }
             },
-            cpfOuCnpj: {
+            cpf_cnpj: {
                 type: DataTypes.STRING,
                 validate: {
                     isCpfOrCnpj(value) {
@@ -41,7 +41,7 @@ class Favorecido extends Model {
             }
         }, { 
             sequelize,
-            modelName: "Favorecido",
+            modelName: "favorecido",
             tableName: "favorecidos"
         });
     }

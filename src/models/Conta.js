@@ -35,7 +35,7 @@ class Conta extends Model {
             },
             { 
                 sequelize,
-                modelName: "Conta",
+                modelName: "conta",
                 tableName: "contas"
             }
         );
@@ -45,7 +45,7 @@ class Conta extends Model {
         this.belongsTo(models.Usuario, {
             as: "usuario",
             foreignKey: {
-                name: "usuarioId",
+                name: "usuario_id",
                 allowNull: false,
                 validate: {
                     notNull: { msg: "O usuário deve ser preenchido!" }

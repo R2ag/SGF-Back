@@ -29,7 +29,7 @@ class Categoria extends Model {
             },
             { 
                 sequelize,
-                modelName: "Categoria",
+                modelName: "categoria",
                 tableName: "categorias"
             }
         );
@@ -39,7 +39,7 @@ class Categoria extends Model {
         this.belongsTo(models.Tipo, {
             as: "tipo",
             foreignKey: {
-                name: "tipoId",
+                name: "tipo_id",
                 allowNull: false,
                 validate: {
                     notNull: { msg: "O tipo da categoria deve ser informado." }

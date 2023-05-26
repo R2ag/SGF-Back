@@ -17,23 +17,25 @@ class OrcamentoCategoria extends Model {
                         isFloat: { msg: "O valor deve ser preenchido com um valor decimal!" },
                     },
                 },
-                valorUtilizado: {
+                valor_utilizado: {
                     type: DataTypes.DOUBLE,
                 },
             },
             { 
                 sequelize, 
-                modelName: "OrcamentoCategoria", 
+                modelName: "orcamentocategoria", 
                 tableName: "orcamentoscategorias"
             }
         );
     }
 
     static associate(models) {
-        this.belongsTo(models.Categoria, {
+        this.removeAttribute('id');
+        this.belongsTo(models.categoria, {
             as: "categoria",
             foreignKey: { 
-                name: "categoriaId", 
+                name: "categoria_id",
+                primaryKey: true, 
                 allowNull: false, 
                 validate: { 
                     notNull: { msg: "A Categoria deve ser preenchida!" } 
@@ -43,7 +45,8 @@ class OrcamentoCategoria extends Model {
         this.belongsTo(models.orcamento, {
             as: "orcamento",
             foreignKey: { 
-                name: "orcamentoId", 
+                name: "orcamento_id",
+                primaryKey: true, 
                 allowNull: false, 
                 validate: { 
                     notNull: { msg: "O Orçamento deve ser preenchido!" } 
