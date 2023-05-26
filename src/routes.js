@@ -1,11 +1,12 @@
 import express from "express";
 
-import {FavorecidoController} from './controllers/FavorecidoController.js';
-import {CategoriaController} from './controllers/CategoriaController.js';
-import {ContaController} from './controllers/ContaController.js';
+import { FavorecidoController } from "./controllers/FavorecidoController.js";
+import { CategoriaController } from "./controllers/CategoriaController.js";
+import { ContaController } from "./controllers/ContaController.js";
 import { TipoController } from "./controllers/TipoController.js";
-import { UsuarioController} from "./controllers/UsuarioController.js";
-import { TransacaoController} from "./controllers/TransacaoController.js";
+import { UsuarioController } from "./controllers/UsuarioController.js";
+import { TransacaoController } from "./controllers/TransacaoController.js";
+
 
 
 const routes = express.Router();

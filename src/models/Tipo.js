@@ -1,17 +1,25 @@
 import { Model, DataTypes } from "sequelize";
 
-class Tipo extends Model{
-    static init (sequelize){
-        super.init({
-            nome:{
-                type: DataTypes.STRING,
-                allowNull:false
+class Tipo extends Model {
+    static init(sequelize) {
+        super.init(
+            {
+                nome: {
+                    type: DataTypes.STRING,
+                    allowNull: false
+                }
+            },
+            {
+                sequelize,
+                modelName: "Tipo",
+                tableName: "tipos"
             }
-        }, {sequelize, modelName: 'tipo', tableName: 'tipo'})
+        );
     }
-    static associate(models) {
 
+    static associate(models) {
+    
     }
 }
 
-export {Tipo}
+export { Tipo };

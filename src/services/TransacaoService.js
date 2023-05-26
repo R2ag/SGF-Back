@@ -53,6 +53,14 @@ class TransacaoService {
     }
   }
 
+  static async update(req){
+
+  }
+
+  static async delete(req){
+    
+  }
+
   static async regrasDeNegocio(obj, transaction) {
     // Atualiza o saldo na conta
     await ContaService.atualizarSaldo(obj.contaId, obj.valor, obj.categoria.tipo.id, transaction);
