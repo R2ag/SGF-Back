@@ -58,23 +58,27 @@ function databaseInserts() {
             const tipo1 = await Tipo.create({ nome: "entrada" });
             const tipo2 = await Tipo.create({ nome: "saida" });
 
+            //categoria
             const categoria1 = await Categoria.create({ nome: "Categoria1", tipoId: 1, descricao: "", observacao: "observação1" });
             const categoria2 = await Categoria.create({ nome: "Categoria2", tipoId: 2, descricao: "Descrição 0000", observacao: "" });
             const categoria3 = await Categoria.create({ nome: "Categoria3", tipoId: 1, descricao: "Descrição 0000", observacao: "observação3" });
             const categoria4 = await Categoria.create({ nome: "Categoria4", tipoId: 2, descricao: "Descrição 0000", observacao: "observação4" });
 
+            //transação
             const transacao1 = await Transacao.create({ valor: "7000", data: "2023-04-14", descricao: "Descrução 0000", categoriaId: 1, contaId: 1, favorecidoId: 1 });
             const transacao2 = await Transacao.create({ valor: "8000", data: "2023-04-12", descricao: "Descrução 0000", categoriaId: 2, contaId: 2, favorecidoId: 2 });
             const transacao3 = await Transacao.create({ valor: "6000", data: "2023-04-11", descricao: "Descrução 0000", categoriaId: 3, contaId: 3, favorecidoId: 3 });
             const transacao4 = await Transacao.create({ valor: "9000", data: "2023-04-15", descricao: "Descrução 0000", categoriaId: 4, contaId: 4, favorecidoId: 4 });
 
-            const orcamento1 = await Orcamento.create({ dataInicio: "2023-01-01", dataFinal: "2023-02-01", valorTotal: "1000", usuarioId: 1 });
+            //orcamento
+            const orcamento1 = await Orcamento.create({ dataInicio: "2023-05-01", dataFinal: "2023-06-01", valorTotal: "1000", usuarioId: 1 });
             const orcamento2 = await Orcamento.create({ dataInicio: "2023-03-01", dataFinal: "2023-04-01", valorTotal: "2000", usuarioId: 2 });
             const orcamento3 = await Orcamento.create({ dataInicio: "2023-04-01", dataFinal: "2023-06-01", valorTotal: "3000", usuarioId: 3 });
             const orcamento4 = await Orcamento.create({ dataInicio: "2023-07-01", dataFinal: "2023-08-01", valorTotal: "1500", usuarioId: 4 });
             const orcamento5 = await Orcamento.create({ dataInicio: "2023-08-01", dataFinal: "2023-09-01", valorTotal: "1500", usuarioId: 1 });
             const orcamento6 = await Orcamento.create({ dataInicio: "2023-09-01", dataFinal: "2023-10-01", valorTotal: "2000", usuarioId: 1 });
 
+            //orçamentoCategoria
             const orcamentoCategoria1 = await OrcamentoCategoria.create({ valor: "1000", descricao: "Descrição 0000", categoriaId: 1, orcamentoId: 1 });
             const orcamentoCategoria2 = await OrcamentoCategoria.create({ valor: "2000", descricao: "Descrição 0000", categoriaId: 2, orcamentoId: 2 });
             const orcamentoCategoria3 = await OrcamentoCategoria.create({ valor: "3000", descricao: "Descrição 0000", categoriaId: 3, orcamentoId: 3 });

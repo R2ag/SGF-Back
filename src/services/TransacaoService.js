@@ -50,9 +50,9 @@ class TransacaoService {
                         data,
                         descricao,
                         valor: valorNormalizado,
-                        conta_id: conta.id,
-                        categoria_id: categoria.id,
-                        favorecido_id: favorecido.id
+                        contaId: conta.id,
+                        categoriaId: categoria.id,
+                        favorecidoId: favorecido.id
                     },
                     { transaction: t }
                 );
@@ -76,8 +76,61 @@ class TransacaoService {
 
     static async update(req) {
         try {
+
+            const t = await Transacao.sequelize.transaction();
+
             const { id } = req.params;
             const { data, descricao, valor, conta, categoria, favorecido } = req.body;
+
+            const valorNormalizado = Math.abs(valor);
+
+            const obj = await Transacao.findByPk(id, { include: { all: true, nested: true }, transaction: t });
+
+            //Atualizar o saldo da conta
+            if ((obj.valor != valor) || (obj.categoria.tipo.id != categoria.tipo.id) || (obj.conta.id != conta.id)){
+                //Desfaz a alteração no saldo feita no create
+                if (obj.categoria.tipo.id == 1) {
+                    await ContaService.atualizarSaldo(obj.contaId, obj.valor, 2, t);
+                } else {
+                    await ContaService.atualizarSaldo(obj.contaId, obj.valor, 1, t);
+                }
+
+                //Realiza as alterações;
+                Object.assign(obj, {
+                    data,
+                    descricao,
+                    valor: valorNormalizado,
+                    contaId: conta.id,
+                    categoriaId: categoria.id,
+                    favorecidoId: favorecido.id
+                })
+                await obj.save(t);
+
+                //Aplica as regras de negocio sobre a alteração.
+                const objCriado = await Transacao.findByPk(obj.id, { include: { all: true, nested: true }, transaction: t });
+
+                const messageResponse = new MessageResponseDTO(await this.regrasDeNegocio(objCriado, t));
+
+                await t.commit();
+
+                return messageResponse;
+
+            }else{
+                Object.assign(obj, {
+                    data,
+                    descricao,
+                    valor: valor,
+                    contaId: conta.id,
+                    categoriaId: categoria.id,
+                    favorecidoId: favorecido.id
+                })
+                await obj.save(t);
+                const messageResponse = new MessageResponseDTO("Transação atualizada com sucesso!");
+
+                await t.commit();
+
+                return messageResponse;
+            }
         } catch (error) {
             console.error("Erro ao atualizar a transação", error);
             throw error;
@@ -85,21 +138,47 @@ class TransacaoService {
 
     }
 
+    static async delete(req) {
+        try {
+            const { id } = req.params;
+            const t = await Transacao.sequelize.transaction();
+
+            const obj = await Transacao.findByPk(id, { include: { all: true, nested: true }, transaction: t });;
+
+            
+            if (obj == null) throw 'Transação não encontrada';
+
+            if (obj.categoria.tipo.id == 1) {
+                await ContaService.atualizarSaldo(obj.contaId, obj.valor, 2, t);
+            } else {
+                await ContaService.atualizarSaldo(obj.contaId, obj.valor, 1, t);
+            }
+            await obj.destroy(t);
+
+            t.commit();
+
+            return obj;
+        } catch (error) {
+            console.error("Erro ao excluir a transação", error);
+            throw error;
+        }
+    }
     static async regrasDeNegocio(obj, transaction) {
         try {
             // Atualiza o saldo na conta
-            await ContaService.atualizarSaldo(obj.conta_id, obj.valor, obj.categoria.tipo.id, transaction);
+            await ContaService.atualizarSaldo(obj.contaId, obj.valor, obj.categoria.tipo.id, transaction);
     
             // Verificar se existe orçamento
-            const orcamentosId = await OrcamentoService.findByPeriodAndCategory(obj.data, obj.categoria_id);
+            const orcamentosId = await OrcamentoService.findByPeriodAndCategory(obj.data, obj.categoriaId);
     
             // Se existir orçamento: Atualizar valor disponível
             if (orcamentosId.length > 0) {
                 let mensagem = '';
-                await Promise.all(orcamentosId.map(async orcamentoId => {
+                await Promise.all(orcamentosId.map(async (orcamento) => {
+                    const orcamentoId = orcamento.id; // Acessando corretamente o valor do orcamentoId
                     const limiteDisponivel = await OrcamentoService.atualizarValorUtilizado(
                         orcamentoId,
-                        obj.categoria_id,
+                        obj.categoriaId,
                         obj.valor,
                         transaction
                     );
