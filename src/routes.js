@@ -48,5 +48,13 @@ routes.post('/transacoes', TransacaoController.create);
 routes.put('/transacoes/:id', TransacaoController.update);
 routes.delete('/transacoes/:id', TransacaoController.delete);
 
+//Orcamento
+routes.get('/orcamentos', OrcamentoController.findAll);
+routes.get('/orcamentos/:id', OrcamentoController.findByPk);
+//routes.get('/orcamentos/:id', OrcamentoController.findByUsuario);
+routes.get('/orcamentos/findByUsuario/:usuarioId', OrcamentoController.findByUsuario);
+routes.post('/orcamentos', OrcamentoController.create);
+routes.put('/orcamentos/:id', OrcamentoController.update);
+routes.delete('/orcamentos/:id', OrcamentoController.delete);
 
 export default routes;

@@ -540,6 +540,240 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Transações",
+			"item": [
+				{
+					"name": "/transacoes/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/transacoes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transacoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/transacoes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": \"2023-05-20\",\n    \"descricao\": \"Descrição da tarnsacao\",\n    \"valor\": 400,\n    \"contaId\": 1,\n    \"favorecidoId\": 1,\n    \"categoriaId\": 2,\n    \"conta\": {\n        \"id\": 1,\n        \"nome\": \"Conta1\",\n        \"tipo\": \"Tipo 01\",\n        \"descricao\": \"Descrição 0000\",\n        \"saldo\": 1000,\n        \"createdAt\": \"2023-05-25T04:51:20.598Z\",\n        \"updatedAt\": \"2023-05-25T04:51:20.598Z\",\n        \"usuarioId\": 1,\n        \"usuario\": {\n            \"id\": 1,\n            \"nome\": \"Usuario1\",\n            \"cpf\": \"111.111.111-11\",\n            \"email\": \"usuario1@email.com\",\n            \"usuario\": \"usuario1\",\n            \"senha\": \"123456\",\n            \"createdAt\": \"2023-05-25T04:51:20.559Z\",\n            \"updatedAt\": \"2023-05-25T04:51:20.559Z\"\n        }\n    },\n    \"favorecido\": {\n        \"id\": 1,\n        \"nome\": \"Favorecido1\",\n        \"ramo\": \"Ramo 0001\",\n        \"cpfOuCnpj\": \"111.111.111-11\",\n        \"email\": \"favorecido1@email.com\",\n        \"createdAt\": \"2023-05-25T04:51:20.616Z\",\n        \"updatedAt\": \"2023-05-25T04:51:20.616Z\"\n    },\n    \"categoria\": {\n        \"id\": 1,\n        \"nome\": \"Categoria1\",\n        \"descricao\": \"\",\n        \"observacao\": \"observação1\",\n        \"createdAt\": \"2023-05-25T04:51:20.642Z\",\n        \"updatedAt\": \"2023-05-25T04:51:20.642Z\",\n        \"tipoId\": 1,\n        \"tipo\": {\n            \"id\": 1,\n            \"nome\": \"entrada\",\n            \"createdAt\": \"2023-05-25T04:51:20.633Z\",\n            \"updatedAt\": \"2023-05-25T04:51:20.633Z\"\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/transacoes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/transacoes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/transacoes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/transacoes/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": \"2023-05-20\",\n    \"descricao\": \"Descrição da tarnsacao\",\n    \"valor\": 200,\n    \"contaId\": 1,\n    \"favorecidoId\": 1,\n    \"categoriaId\": 2,\n    \"conta\": {\n        \"id\": 1,\n        \"nome\": \"Conta1\",\n        \"tipo\": \"Tipo 01\",\n        \"descricao\": \"Descrição 0000\",\n        \"saldo\": 1000,\n        \"createdAt\": \"2023-05-25T04:51:20.598Z\",\n        \"updatedAt\": \"2023-05-25T04:51:20.598Z\",\n        \"usuarioId\": 1,\n        \"usuario\": {\n            \"id\": 1,\n            \"nome\": \"Usuario1\",\n            \"cpf\": \"111.111.111-11\",\n            \"email\": \"usuario1@email.com\",\n            \"usuario\": \"usuario1\",\n            \"senha\": \"123456\",\n            \"createdAt\": \"2023-05-25T04:51:20.559Z\",\n            \"updatedAt\": \"2023-05-25T04:51:20.559Z\"\n        }\n    },\n    \"favorecido\": {\n        \"id\": 1,\n        \"nome\": \"Favorecido1\",\n        \"ramo\": \"Ramo 0001\",\n        \"cpfOuCnpj\": \"111.111.111-11\",\n        \"email\": \"favorecido1@email.com\",\n        \"createdAt\": \"2023-05-25T04:51:20.616Z\",\n        \"updatedAt\": \"2023-05-25T04:51:20.616Z\"\n    },\n    \"categoria\": {\n        \"id\": 1,\n        \"nome\": \"Categoria1\",\n        \"descricao\": \"\",\n        \"observacao\": \"observação1\",\n        \"createdAt\": \"2023-05-25T04:51:20.642Z\",\n        \"updatedAt\": \"2023-05-25T04:51:20.642Z\",\n        \"tipoId\": 1,\n        \"tipo\": {\n            \"id\": 1,\n            \"nome\": \"entrada\",\n            \"createdAt\": \"2023-05-25T04:51:20.633Z\",\n            \"updatedAt\": \"2023-05-25T04:51:20.633Z\"\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/transacoes/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transacoes",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/transacao/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/transacoes/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transacoes",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orçamento",
+			"item": [
+				{
+					"name": "/orcamentos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/orcamentos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orcamentos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/orcamentos/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/orcamentos/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orcamentos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/orcamentos/findByUsuario/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/orcamentos/findByUsuario/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orcamentos",
+								"findByUsuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/orcamentos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dataInicio\": \"2023-03-01\",\n  \"dataFinal\": \"2023-04-01\",\n  \"valorTotal\": 1500,\n  \"usuarioId\": 1,\n  \"orcamentosCategorias\": [\n    {\n      \"descricao\": \"Categoria Nova\",\n      \"valor\": 500,\n      \"categoriaId\": 2\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/orcamentos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orcamentos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/orcamentos/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/orcamentos/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orcamentos",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

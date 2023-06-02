@@ -25,7 +25,7 @@ class FavorecidoService {
     static async create(req) {
         try {
             const { nome, ramo, cpfOuCnpj, email } = req.body;
-            const obj = await Favorecido.create({ nome, ramo, cpfOunpj, email });
+            const obj = await Favorecido.create({ nome, ramo, cpfOuCnpj, email });
             return await Favorecido.findByPk(obj.id, { include: { all: true, nested: true } });
         } catch (error) {
             console.error("Erro ao criar favorecido:", error);

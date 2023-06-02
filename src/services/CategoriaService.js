@@ -26,7 +26,7 @@ class CategoriaService {
         try {
             const { nome, descricao, observacao, tipo } = req.body;
             if (tipo == null) throw 'O tipo da categoria deve ser informado!';
-            const obj = await Categoria.create({ nome, descricao, observacao, tipo_id: tipo.id });
+            const obj = await Categoria.create({ nome, descricao, observacao, tipoId: tipo.id });
             return await Categoria.findByPk(obj.id, { include: { all: true, nested: true } });
         } catch (error) {
             console.error("Erro ao criar categoria:", error);
@@ -40,7 +40,7 @@ class CategoriaService {
             const { nome, descricao, observacao, tipo } = req.body;
             const obj = await Categoria.findByPk(id, { include: { all: true, nested: true } });
             if (obj == null) throw 'Categoria não encontrada';
-            Object.assign(obj, { nome, descricao, observacao, tipo_id: tipo.id });
+            Object.assign(obj, { nome, descricao, observacao, tipoId: tipo.id });
             await obj.save();
             return await Categoria.findByPk(id, { include: { all: true, nested: true } });
         } catch (error) {

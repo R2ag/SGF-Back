@@ -34,7 +34,7 @@ class OrcamentoCategoria extends Model {
         this.belongsTo(models.categoria, {
             as: "categoria",
             foreignKey: { 
-                name: "categoria_id",
+                name: "categoriaId",
                 primaryKey: true, 
                 allowNull: false, 
                 validate: { 
@@ -45,7 +45,7 @@ class OrcamentoCategoria extends Model {
         this.belongsTo(models.orcamento, {
             as: "orcamento",
             foreignKey: { 
-                name: "orcamento_id",
+                name: "orcamentoId",
                 primaryKey: true, 
                 allowNull: false, 
                 validate: { 
