@@ -1,4 +1,4 @@
-import Sequelize from "sequelize";
+import Sequelize, { QueryTypes } from "sequelize";
 import { Orcamento } from "../models/Orcamento.js";
 import { OrcamentoCategoria } from "../models/OrcamentoCategoria.js";
 
@@ -59,6 +59,24 @@ class OrcamentoService {
             console.error("Erro ao atualizar valor utilizado do orçamento:", error);
             throw error;
         }
+    }
+
+    static async findGraficoOfValoresOrcadosETransacionadosByOrcamento(req){
+        const { id } = req.params;
+        const objs = await Orcamento.sequelize.query(`
+            SELECT
+                categorias.nome AS 'Categoria',
+                orcamentoscategorias.valor AS 'Valor Orçado',
+                orcamentoscategorias.valor_utilizado AS 'Valor Utilizado'
+            FROM 
+                orcamentos
+                JOIN orcamentoscategorias ON orcamento.id = orcamentoscategorias.orcamento_id
+                JOIN categorias ON orcamentoscategorias.categoria_id = categoria.id
+            WHERE
+                orcamentos.id = :id
+        `, {replacements: {id: id}, type: QueryTypes.SELECT});
+
+        return objs;
     }
 }
 

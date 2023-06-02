@@ -17,7 +17,7 @@ class OrcamentoCategoria extends Model {
                         isFloat: { msg: "O valor deve ser preenchido com um valor decimal!" },
                     },
                 },
-                valor_utilizado: {
+                valorUtilizado: {
                     type: DataTypes.DOUBLE,
                 },
             },
