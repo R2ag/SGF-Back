@@ -47,14 +47,19 @@ routes.get('/transacoes/:id', TransacaoController.findByPk);
 routes.post('/transacoes', TransacaoController.create);
 routes.put('/transacoes/:id', TransacaoController.update);
 routes.delete('/transacoes/:id', TransacaoController.delete);
+routes.get('/transacoes/fyndByCategoriaEPeriodo/:idCategoria/:dataInicio/:dataFinal', TransacaoController.fyndByCategoriaEPeriodo);
+routes.get('/transacoes/fyndByContaEPeriodo/:idConta/:dataInicio/:dataFinal', TransacaoController.fyndByContaEPeriodo);
+routes.get('/transacoes/fyndByFavirecidoEPeriodo/:idFavorecido/:dataInicio/:dataFinal', TransacaoController.fyndByFavirecidoEPeriodo);
+routes.get('/transacoes/listByCategoriaEPeriodo/:dataInicio/:dataFinal', TransacaoController.listByCategoriaEPeriodo);
 
 //Orcamento
 routes.get('/orcamentos', OrcamentoController.findAll);
 routes.get('/orcamentos/:id', OrcamentoController.findByPk);
-//routes.get('/orcamentos/:id', OrcamentoController.findByUsuario);
 routes.get('/orcamentos/findByUsuario/:usuarioId', OrcamentoController.findByUsuario);
 routes.post('/orcamentos', OrcamentoController.create);
 routes.put('/orcamentos/:id', OrcamentoController.update);
 routes.delete('/orcamentos/:id', OrcamentoController.delete);
+routes.get('/orcamentos/findGraficoOfDivisaoDoTotalOrcadoByOrcamento/:usuarioId/:dataInicio/:dataFinal',OrcamentoController.findGraficoOfDivisaoDoTotalOrcadoByOrcamento);
+routes.get('/orcamentos/findGraficoOfValoresOrcadosETransacionadosByOrcamento/:id',OrcamentoController.findGraficoOfValoresOrcadosETransacionadosByOrcamento);
 
 export default routes;

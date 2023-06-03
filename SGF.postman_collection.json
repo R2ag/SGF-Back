@@ -659,6 +659,97 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "/transacoes/fyndByCategoriaEPeriodo/:idCategoria/:dataInicio/:dataFinal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/transacoes/fyndByCategoriaEPeriodo/1/2023-04-01/2023-04-30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transacoes",
+								"fyndByCategoriaEPeriodo",
+								"1",
+								"2023-04-01",
+								"2023-04-30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/transacoes/fyndByContaEPeriodo/:idConta/:dataInicio/:dataFinal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/transacoes/fyndByContaEPeriodo/1/2023-04-01/2023-04-30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transacoes",
+								"fyndByContaEPeriodo",
+								"1",
+								"2023-04-01",
+								"2023-04-30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/transacoes/fyndByFavirecidoEPeriodo/:idFavorecido/:dataInicio/:dataFinal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/transacoes/fyndByFavorecidoEPeriodo/1/2023-04-01/2023-04-30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transacoes",
+								"fyndByFavorecidoEPeriodo",
+								"1",
+								"2023-04-01",
+								"2023-04-30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/transacoes/listByCategoriaEPeriodo/:dataInicio/:dataFinal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/transacoes/listByCategoriaEPeriodo/2023-04-01/2023-04-30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"transacoes",
+								"listByCategoriaEPeriodo",
+								"2023-04-01",
+								"2023-04-30"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -768,6 +859,50 @@
 							"path": [
 								"orcamentos",
 								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/orcamentos/findGraficoOfDivisaoDoTotalOrcadoByOrcamento/:usuarioId/:dataInicio/:dataFinal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/orcamentos/findGraficoOfDivisaoDoTotalOrcadoByOrcamento/1/23-01-01/23-10-01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orcamentos",
+								"findGraficoOfDivisaoDoTotalOrcadoByOrcamento",
+								"1",
+								"23-01-01",
+								"23-10-01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/orcamentos/findGraficoOfValoresOrcadosETransacionadosByOrcamento/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/orcamentos/findGraficoOfValoresOrcadosETransacionadosByOrcamento/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orcamentos",
+								"findGraficoOfValoresOrcadosETransacionadosByOrcamento",
+								"2"
 							]
 						}
 					},

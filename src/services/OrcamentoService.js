@@ -124,43 +124,45 @@ class OrcamentoService {
     }
 
     static async findByPeriodAndCategory(data, categoriaId) {
-    try {
-        const orcamentoId = await Orcamento.sequelize.query(
-            "SELECT orcamentos.id FROM orcamentos JOIN orcamentoscategorias ON orcamentos.id = orcamentoscategorias.orcamento_id WHERE orcamentos.data_inicio <= :data AND orcamentos.data_final >= :data AND orcamentoscategorias.categoria_id = :categoria_id",
-            { replacements: { data: data, categoria_id: categoriaId }, type: Sequelize.QueryTypes.SELECT }
-        );
+        try {
+            const orcamentoId = await Orcamento.sequelize.query(
+                "SELECT orcamentos.id FROM orcamentos JOIN orcamentoscategorias ON orcamentos.id = orcamentoscategorias.orcamento_id WHERE orcamentos.data_inicio <= :data AND orcamentos.data_final >= :data AND orcamentoscategorias.categoria_id = :categoria_id",
+                { replacements: { data: data, categoria_id: categoriaId }, type: Sequelize.QueryTypes.SELECT }
+            );
 
-        return orcamentoId;
-    } catch (error) {
-        console.error("Erro ao buscar orçamento por período e categoria:", error);
-        throw error;
+            return orcamentoId;
+        } catch (error) {
+            console.error("Erro ao buscar orçamento por período e categoria:", error);
+            throw error;
+        }
     }
-}
 
     static async atualizarValorUtilizado(idOrcamento, idCategoria, valorTransacao, transaction) {
-    try {
-        const orcamentoCategoria = await OrcamentoCategoria.findOne({
-            where: {
-                orcamentoId: idOrcamento,
-                categoriaId: idCategoria
+        try {
+            const orcamentoCategoria = await OrcamentoCategoria.findOne({
+                where: {
+                    orcamentoId: idOrcamento,
+                    categoriaId: idCategoria
+                }
+            });
+
+            if (!orcamentoCategoria) {
+                throw new Error('Categoria de orçamento não encontrada!');
             }
-        });
 
-        if (!orcamentoCategoria) {
-            throw new Error('Categoria de orçamento não encontrada!');
+            orcamentoCategoria.valorUtilizado += valorTransacao;
+            await orcamentoCategoria.save(transaction);
+            const valorDisponivel = orcamentoCategoria.valor - orcamentoCategoria.valorUtilizado;
+            return valorDisponivel;
+        } catch (error) {
+            console.error("Erro ao atualizar valor utilizado do orçamento:", error);
+            throw error;
         }
-
-        orcamentoCategoria.valorUtilizado += valorTransacao;
-        await orcamentoCategoria.save(transaction);
-        const valorDisponivel = orcamentoCategoria.valor - orcamentoCategoria.valorUtilizado; 
-        return valorDisponivel;
-    } catch (error) {
-        console.error("Erro ao atualizar valor utilizado do orçamento:", error);
-        throw error;
     }
-}
 
-    static async findGraficoOfValoresOrcadosETransacionadosByOrcamento(req){
+    // Relatorio que vai listar as categorias e comparar o valor orçado com o valor utilizado
+
+    static async findGraficoOfValoresOrcadosETransacionadosByOrcamento(req) {
         const { id } = req.params;
         const objs = await Orcamento.sequelize.query(`
             SELECT
@@ -169,14 +171,48 @@ class OrcamentoService {
                 orcamentoscategorias.valor_utilizado AS 'Valor Utilizado'
             FROM 
                 orcamentos
-                JOIN orcamentoscategorias ON orcamento.id = orcamentoscategorias.orcamento_id
-                JOIN categorias ON orcamentoscategorias.categoria_id = categoria.id
+                JOIN orcamentoscategorias ON orcamentos.id = orcamentoscategorias.orcamento_id
+                JOIN categorias ON orcamentoscategorias.categoria_id = categorias.id
             WHERE
                 orcamentos.id = :id
-        `, {replacements: {id: id}, type: QueryTypes.SELECT});
+        `, { replacements: { id: id }, type: QueryTypes.SELECT });
 
         return objs;
     }
+
+    //relatorio de categorias, representando o valor relativo de cada categoria orçada do usuario em relação ao total orçado no período desejado a ser pesquisado por porcentagem
+
+    static async findGraficoOfDivisaoDoTotalOrcadoByOrcamento(req) {
+        const { usuarioId, dataInicio, dataFinal } = req.params;
+        const objs = await Orcamento.sequelize.query(`
+            SELECT 
+                oc.categoria_id AS categoriaId, 
+                c.nome AS Nome, 
+                SUM(oc.valor) AS totalGasto 
+            FROM 
+                orcamentos o 
+                JOIN orcamentoscategorias oc ON o.id = oc.orcamento_id 
+                JOIN categorias c ON oc.categoria_id = c.id 
+            WHERE 
+                o.usuario_id = :usuario_id 
+                AND o.data_inicio >= :data_inicio 
+                AND o.data_final <= :data_final 
+            GROUP BY 
+                oc.categoria_id, 
+                c.nome
+        `, { replacements: { usuario_id: usuarioId, data_inicio: dataInicio, data_final: dataFinal }, type: QueryTypes.SELECT });
+
+        // Calcula a soma de todos os valores obtidos
+        const totalGasto = objs.reduce((sum, obj) => sum + obj.totalGasto, 0);
+
+        // Calcula o valor percentual para cada objeto e substitui o totalGasto
+        objs.forEach(obj => {
+            obj.totalGasto = (obj.totalGasto / totalGasto) * 100;
+        });
+
+        return objs;
+    }
+
 }
 
 export { OrcamentoService };

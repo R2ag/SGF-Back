@@ -69,6 +69,8 @@ function databaseInserts() {
             const transacao2 = await Transacao.create({ valor: "8000", data: "2023-04-12", descricao: "Descrução 0000", categoriaId: 2, contaId: 2, favorecidoId: 2 });
             const transacao3 = await Transacao.create({ valor: "6000", data: "2023-04-11", descricao: "Descrução 0000", categoriaId: 3, contaId: 3, favorecidoId: 3 });
             const transacao4 = await Transacao.create({ valor: "9000", data: "2023-04-15", descricao: "Descrução 0000", categoriaId: 4, contaId: 4, favorecidoId: 4 });
+            const transacao5 = await Transacao.create({ valor: "600", data: "2023-04-14", descricao: "Descrução 0000", categoriaId: 1, contaId: 1, favorecidoId: 1 });
+            const transacao6 = await Transacao.create({ valor: "800", data: "2023-04-14", descricao: "Descrução 0000", categoriaId: 1, contaId: 1, favorecidoId: 1 });
 
             //orcamento
             const orcamento1 = await Orcamento.create({ dataInicio: "2023-05-01", dataFinal: "2023-06-01", valorTotal: "1000", usuarioId: 1 });

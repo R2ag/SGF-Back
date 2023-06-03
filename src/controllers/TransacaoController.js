@@ -31,6 +31,30 @@ class TransacaoController{
             .then(obj => res.json(obj))
             .catch(next);
     }
+
+    static async fyndByCategoriaEPeriodo(req, res, next){
+        TransacaoService.fyndByCategoriaEPeriodo(req)
+            .then(obj =>res.json(obj))
+            .catch(next);
+    }
+
+    static async fyndByContaEPeriodo(req, res, next){
+        TransacaoService.fyndByContaEPeriodo(req)
+            .then(obj =>res.json(obj))
+            .catch(next);
+    }
+
+    static async fyndByFavirecidoEPeriodo(req, res, next){
+        TransacaoService.fyndByFavirecidoEPeriodo(req)
+            .then(obj =>res.json(obj))
+            .catch(next);
+    }
+
+    static async listByCategoriaEPeriodo(req, res, next){
+        TransacaoService.listByCategoriaEPeriodo(req)
+            .then(obj =>res.json(obj))
+            .catch(next);
+    }
 }
 
 export {TransacaoController}
