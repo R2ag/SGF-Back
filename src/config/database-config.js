@@ -9,7 +9,7 @@ export const dbConfig = {
   }
 };
 
-*/
+
 // Configuração do bando de dados no ambiente de desenvolvimento
 export const dbConfig = {
   dialect: 'postgres',
@@ -24,17 +24,22 @@ export const dbConfig = {
   },
 };
 
+*/
 
-/*
 // Configuração do bando de dados no ambiente de produção
 export const dbConfig = {
   dialect: 'postgres',
-  host: 'localhost',
-  username: 'postgres',
-  password: 'postgres',
-  database: 'scv-backend-node-sequelize',
+  host: 'dpg-ci65j66nqql3q38f6rtg-a.oregon-postgres.render.com',
+  username: 'sgf_back_db_user',
+  password: 'G5WJSlnfIPB7Ke2XM3TlLfxH0PHsz7LH',
+  database: 'sgf_back_db',
   define: {
-    timestamps: true
+    timestamps: true,
+    freezeTableName: true,
+    underscored: true
   },
+  dialectOptions: {
+    ssl: true
+  }
 };
-*/
+
