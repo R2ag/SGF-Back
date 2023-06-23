@@ -44,8 +44,8 @@ class TransacaoController{
             .catch(next);
     }
 
-    static async fyndByFavirecidoEPeriodo(req, res, next){
-        TransacaoService.fyndByFavirecidoEPeriodo(req)
+    static async fyndByFavorecidoEPeriodo(req, res, next){
+        TransacaoService.fyndByFavorecidoEPeriodo(req)
             .then(obj =>res.json(obj))
             .catch(next);
     }

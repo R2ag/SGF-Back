@@ -47,10 +47,10 @@ routes.get('/transacoes/:id', TransacaoController.findByPk);
 routes.post('/transacoes', TransacaoController.create);
 routes.put('/transacoes/:id', TransacaoController.update);
 routes.delete('/transacoes/:id', TransacaoController.delete);
-routes.get('/transacoes/fyndByCategoriaEPeriodo/:idCategoria/:dataInicio/:dataFinal', TransacaoController.fyndByCategoriaEPeriodo);
-routes.get('/transacoes/fyndByContaEPeriodo/:idConta/:dataInicio/:dataFinal', TransacaoController.fyndByContaEPeriodo);
-routes.get('/transacoes/fyndByFavirecidoEPeriodo/:idFavorecido/:dataInicio/:dataFinal', TransacaoController.fyndByFavirecidoEPeriodo);
-routes.get('/transacoes/listByCategoriaEPeriodo/:dataInicio/:dataFinal', TransacaoController.listByCategoriaEPeriodo);
+routes.get('/transacoes/fyndByCategoriaEPeriodo/:idCategoria/:dataInicial/:dataFinal', TransacaoController.fyndByCategoriaEPeriodo);
+routes.get('/transacoes/fyndByContaEPeriodo/:idConta/:dataInicial/:dataFinal', TransacaoController.fyndByContaEPeriodo);
+routes.get('/transacoes/fyndByFavorecidoEPeriodo/:idFavorecido/:dataInicial/:dataFinal', TransacaoController.fyndByFavorecidoEPeriodo);
+routes.get('/transacoes/listByCategoriaEPeriodo/:dataInicial/:dataFinal', TransacaoController.listByCategoriaEPeriodo);
 
 //Orcamento
 routes.get('/orcamentos', OrcamentoController.findAll);
