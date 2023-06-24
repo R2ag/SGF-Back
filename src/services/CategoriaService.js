@@ -22,11 +22,14 @@ class CategoriaService {
         }
     }
 
-    static async create(req) {
+    static async create(categoriaDTO) {
         try {
-            const { nome, descricao, observacao, tipo } = req.body;
-            if (tipo == null) throw 'O tipo da categoria deve ser informado!';
-            const obj = await Categoria.create({ nome, descricao, observacao, tipoId: tipo.id });
+            console.log(categoriaDTO);
+            const nome = categoriaDTO.nome;
+            const descricao = categoriaDTO.descricao;
+            const observacao = categoriaDTO.observacao;
+            const tipoId = categoriaDTO.tipoId;
+            const obj = await Categoria.create({ nome, descricao, observacao, tipoId});
             return await Categoria.findByPk(obj.id, { include: { all: true, nested: true } });
         } catch (error) {
             console.error("Erro ao criar categoria:", error);
@@ -34,11 +37,11 @@ class CategoriaService {
         }
     }
 
-    static async update(req) {
+    static async update(req, categoriaDTO) {
         try {
             const { id } = req.params;
-            const { nome, descricao, observacao, tipo } = req.body;
-            const obj = await Categoria.findByPk(id, { include: { all: true, nested: true } });
+            const { nome, descricao, observacao, tipo } = categoriaDTO;
+            const obj = await Categoria.findByPk(id);
             if (obj == null) throw 'Categoria não encontrada';
             Object.assign(obj, { nome, descricao, observacao, tipoId: tipo.id });
             await obj.save();
