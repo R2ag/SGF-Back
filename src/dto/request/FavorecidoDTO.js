@@ -9,17 +9,28 @@ const favorecidoSchema = yup.object().shape({
 })
 
 class FavorecidoDTO{
-    constructor(nome, ramo, cpfOuCnpj, email){
-        favorecidoSchema.validate({nome, ramo, cpfOuCnpj, email})
-            .then(validateData =>{
-                this.nome = validateData.nome;
-                this.ramo = validateData.ramo;
-                this.cpfOuCnpj = validateData.cpfOuCnpj;
-                this.email = validateData.email;
-            })
-            .catch(error =>{
-                throw new Error (`Erro de validação: ${error.message}`);
-            })
+    constructor(nome, ramo, cpfOuCnpj, email, next){
+        this.nome = nome;
+        this.ramo = ramo;
+        this.cpfOuCnpj = cpfOuCnpj;
+        this.email = email
+
+        this.isValid = this.validateData(next);
+    }
+
+    validateData(next){
+        try{
+            favorecidoSchema.validateSync({
+                nome: this.nome,
+                ramo: this.ramo,
+                cpfOuCnpj: this.cpfOuCnpj,
+                email: this.email
+            });
+            return true;
+        }catch(error){
+            next(error);
+            return false;
+        }
     }
 }
 

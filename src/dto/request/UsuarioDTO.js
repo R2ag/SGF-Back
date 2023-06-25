@@ -9,18 +9,30 @@ const userSchema = yup.object().shape({
 });
 
 class UsuarioDTO {
-    constructor(nome, cpf, email, usuario, senha) {
-        userSchema.validate({ nome, cpf, email, usuario, senha })
-            .then(validatedData => {
-                this.nome = validatedData.nome;
-                this.cpf = validatedData.cpf;
-                this.email = validatedData.email;
-                this.usuario = validatedData.usuario;
-                this.senha = validatedData.senha;
-            })
-            .catch(error => {
-                throw new Error(`Erro de validação: ${error.message}`);
+    constructor(nome, cpf, email, usuario, senha, next) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.usuario = usuario;
+        this.senha = senha;
+
+        this.isValid = validateData(next);
+    }
+
+    validateData(next){
+        try {
+            userSchema.validateSync({
+                nome: this.nome,
+                cpf: this.cpf,
+                email: this.email,
+                usuario: this.usuario,
+                senha: this.senha
             });
+            return true;
+        } catch (error) {
+            next(error);
+            return false;
+        }
     }
 
 }
