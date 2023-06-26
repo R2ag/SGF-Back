@@ -32,9 +32,17 @@ class ContaController {
     }
 
     static async update(req, res, next) {
-        ContaService.update(req)
-            .then(obj => res.json(obj))
-            .catch(next);
+        try {
+            const { nome, tipo, descricao, saldo, usuarioId } = req.body;
+            const contaDTO = new ContaDTO(nome, tipo, descricao, saldo, usuarioId, next);
+            if (contaDTO.isValid) {
+                const updatedConta = await ContaService.update(req, contaDTO);
+                res.status(200).json(updatedConta);
+            }
+
+        } catch (error) {
+            next(error);
+        }
     }
 
     static async delete(req, res, next) {

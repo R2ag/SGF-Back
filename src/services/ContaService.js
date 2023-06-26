@@ -33,13 +33,13 @@ class ContaService {
         }
     }
 
-    static async update(req) {
+    static async update(req, contaDTO) {
         try {
             const { id } = req.params;
-            const { nome, tipo, descricao, saldo, usuario } = req.body;
-            const obj = await Conta.findByPk(id, { include: { all: true, nested: true } });
+            const { nome, tipo, descricao, saldo, usuarioId } = contaDTO;
+            const obj = await Conta.findByPk(id);
             if (obj == null) throw 'Conta não encontrada';
-            Object.assign(obj, { nome, tipo, descricao, saldo, usuarioId: usuario.id });
+            Object.assign(obj, { nome, tipo, descricao, saldo, usuarioId});
             await obj.save();
             return obj;
         } catch (error) {
