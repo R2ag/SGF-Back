@@ -1,4 +1,5 @@
 import { OrcamentoService } from "../services/OrcamentoService.js";
+import { OrcamentoDTO } from '../dto/request/OrcamentoDTO.js';
 
 class OrcamentoController {
     static async findAll(req, res, next) {
@@ -30,8 +31,12 @@ class OrcamentoController {
 
     static async create(req, res, next) {
         try {
-            const obj = await OrcamentoService.create(req);
-            res.json(obj);
+            const { dataInicio, dataFinal, valorTotal, usuarioId } = req.body;
+            const orcamentoDTO = new OrcamentoDTO(dataInicio, dataFinal, valorTotal, usuarioId, next)
+            if (orcamentoDTO.isValid) {
+                const createdOrcamento = await OrcamentoService.create(orcamentoDTO);
+                res.status(201).json(createdOrcamento);
+            }
         } catch (error) {
             next(error);
         }
@@ -39,8 +44,13 @@ class OrcamentoController {
 
     static async update(req, res, next) {
         try {
-            const obj = await OrcamentoService.update(req);
-            res.json(obj);
+            const { dataInicio, dataFinal, valorTotal, usuarioId } = req.body;
+            const orcamentoDTO = new OrcamentoDTO(dataInicio, dataFinal, valorTotal, usuarioId, next)
+            if (orcamentoDTO.isValid) {
+                const obj = await OrcamentoService.update(req, orcamentoDTO);
+                res.status(200).json(obj);
+            }
+
         } catch (error) {
             next(error);
         }

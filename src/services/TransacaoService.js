@@ -26,23 +26,9 @@ class TransacaoService {
         }
     }
 
-    static async create(req) {
+    static async create(transacaoDTO) {
         try {
-            const { data, descricao, valor, conta, categoria, favorecido } = req.body;
-
-            if (conta == null) {
-                throw new Error('A conta utilizada nessa transação deve ser informada');
-            }
-            if (categoria == null) {
-                throw new Error('A categoria a qual essa transação pertence deve ser informada');
-            }
-            if (favorecido == null) {
-                throw new Error('Deve ser informado o participante dessa transação');
-            }
-
-            // Normaliza o valor recebido
-            const valorNormalizado = Math.abs(valor);
-
+            const { data, descricao, valor, contaId, categoriaId, favorecidoId } = transacaoDTO;
             const t = await Transacao.sequelize.transaction();
 
             try {
@@ -50,10 +36,10 @@ class TransacaoService {
                     {
                         data,
                         descricao,
-                        valor: valorNormalizado,
-                        contaId: conta.id,
-                        categoriaId: categoria.id,
-                        favorecidoId: favorecido.id
+                        valor,
+                        contaId,
+                        categoriaId,
+                        favorecidoId
                     },
                     { transaction: t }
                 );
@@ -74,16 +60,14 @@ class TransacaoService {
             throw error;
         }
     }
-
-    static async update(req) {
+    //Falta Finalizar Implementação.
+    static async update(req, transacaoDTO) {
         try {
 
             const t = await Transacao.sequelize.transaction();
 
             const { id } = req.params;
-            const { data, descricao, valor, conta, categoria, favorecido } = req.body;
-
-            const valorNormalizado = Math.abs(valor);
+            const { data, descricao, valor, contaId, categoriaId, favorecidoId } = transacaoDTO;
 
             const obj = await Transacao.findByPk(id, { include: { all: true, nested: true }, transaction: t });
 

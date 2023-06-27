@@ -19,10 +19,11 @@ class CategoriaController {
     static async create(req, res, next) {
         try {
             const { nome, descricao, observacao, tipoId } = req.body;
-            const categoriaDTO = new CategoriaDTO(nome, descricao, observacao, tipoId);
-            console.log(categoriaDTO);
-            const createdCategoria = await CategoriaService.create(categoriaDTO);
-            res.json(createdCategoria);
+            const categoriaDTO = new CategoriaDTO(nome, descricao, observacao, tipoId, next);
+            if (categoriaDTO.isValid) {
+                const createdCategoria = await CategoriaService.create(categoriaDTO);
+                res.status(201).json(createdCategoria);
+            }
         } catch (error) {
             next(error);
         }
@@ -30,9 +31,12 @@ class CategoriaController {
 
     static async update(req, res, next) {
         try {
-            const categoriaDTO = new CategoriaDTO(req.body.nome, req.body.descricao, req.body.observacao, req.body.tipoId);
-            const updatedCategoria = await CategoriaService.update(req, categoriaDTO);
-            res.json(updatedCategoria);
+            const { nome, descricao, observacao, tipoId } = req.body;
+            const categoriaDTO = new CategoriaDTO(nome, descricao, observacao, tipoId, next);
+            if (categoriaDTO.isValid) {
+                const updatedCategoria = await CategoriaService.update(req, categoriaDTO);
+                res.status(200).json(updatedCategoria);
+            }
         } catch (error) {
             next(error);
         }

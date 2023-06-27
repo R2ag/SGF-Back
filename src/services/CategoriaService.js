@@ -24,11 +24,7 @@ class CategoriaService {
 
     static async create(categoriaDTO) {
         try {
-            console.log(categoriaDTO);
-            const nome = categoriaDTO.nome;
-            const descricao = categoriaDTO.descricao;
-            const observacao = categoriaDTO.observacao;
-            const tipoId = categoriaDTO.tipoId;
+            const { nome, descricao, observacao, tipoId } = categoriaDTO;
             const obj = await Categoria.create({ nome, descricao, observacao, tipoId});
             return await Categoria.findByPk(obj.id, { include: { all: true, nested: true } });
         } catch (error) {
@@ -40,10 +36,10 @@ class CategoriaService {
     static async update(req, categoriaDTO) {
         try {
             const { id } = req.params;
-            const { nome, descricao, observacao, tipo } = categoriaDTO;
+            const { nome, descricao, observacao, tipoId } = categoriaDTO;
             const obj = await Categoria.findByPk(id);
             if (obj == null) throw 'Categoria não encontrada';
-            Object.assign(obj, { nome, descricao, observacao, tipoId: tipo.id });
+            Object.assign(obj, { nome, descricao, observacao, tipoId});
             await obj.save();
             return await Categoria.findByPk(id, { include: { all: true, nested: true } });
         } catch (error) {

@@ -24,9 +24,9 @@ class OrcamentoService {
         }
     }
 
-    static async create(req) {
+    static async create(orcamentoDTO) {
         try {
-            const { dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias } = req.body;
+            const { dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias } = orcamentoDTO;
 
             if (!orcamentosCategorias || orcamentosCategorias.length === 0) {
                 throw new Error("É necessário fornecer pelo menos uma categoria para o orçamento.");
@@ -56,9 +56,9 @@ class OrcamentoService {
         }
     }
 
-    static async update(req) {
+    static async update(req, orcamentoDTO) {
         const { id } = req.params;
-        const { dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias } = req.body;
+        const { dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias } = orcamentoDTO;
 
         const orcamento = await Orcamento.findByPk(id);
 

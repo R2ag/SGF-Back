@@ -1,3 +1,5 @@
+/**Incluir a lista de OrçametoCategorias */
+
 import * as yup from 'yup';
 
 const orcamentoSchema = yup.object().shape({
