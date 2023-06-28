@@ -44,6 +44,16 @@ class Transacao extends Model {
                 } 
             } 
         });
+        this.belongsTo(models.tipo, { 
+            as: "tipo",
+            foreignKey: {
+                name: "tipoId",
+                allowNull: false,
+                validate: {
+                    notNull: { msg: "O tipo da transação deve ser informado!" } 
+                } 
+            } 
+        });
         this.belongsTo(models.favorecido, {
             as: "favorecido",
             foreignKey: {

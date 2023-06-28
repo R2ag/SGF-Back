@@ -139,20 +139,21 @@ class OrcamentoService {
 
     static async atualizarValorUtilizado(idOrcamento, idCategoria, valorTransacao, transaction) {
         try {
-            const orcamentoCategoria = await OrcamentoCategoria.findOne({
+            const selectedOrcamentoCategoria = await OrcamentoCategoria.findOne({
                 where: {
                     orcamentoId: idOrcamento,
                     categoriaId: idCategoria
                 }
             });
 
-            if (!orcamentoCategoria) {
+            if (!selectedOrcamentoCategoria) {
                 throw new Error('Categoria de orçamento não encontrada!');
             }
 
-            orcamentoCategoria.valorUtilizado += valorTransacao;
-            await orcamentoCategoria.save(transaction);
-            const valorDisponivel = orcamentoCategoria.valor - orcamentoCategoria.valorUtilizado;
+            await selectedOrcamentoCategoria.increment('valorUtilizado',{by: (valorTransacao * -1), transaction});
+            await selectedOrcamentoCategoria.save(transaction);
+
+            const valorDisponivel = selectedOrcamentoCategoria.valor - selectedOrcamentoCategoria.valorUtilizado;
             return valorDisponivel;
         } catch (error) {
             console.error("Erro ao atualizar valor utilizado do orçamento:", error);

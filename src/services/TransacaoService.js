@@ -28,7 +28,7 @@ class TransacaoService {
 
     static async create(transacaoDTO) {
         try {
-            const { data, descricao, valor, contaId, categoriaId, favorecidoId } = transacaoDTO;
+            const { data, descricao, valor, contaId, categoriaId, favorecidoId, tipoId } = transacaoDTO;
             const t = await Transacao.sequelize.transaction();
 
             try {
@@ -39,7 +39,8 @@ class TransacaoService {
                         valor,
                         contaId,
                         categoriaId,
-                        favorecidoId
+                        favorecidoId,
+                        tipoId
                     },
                     { transaction: t }
                 );
@@ -61,12 +62,11 @@ class TransacaoService {
         }
     }
     //Falta Finalizar Implementação.
-    static async update(req, transacaoDTO) {
+    static async update(id, transacaoDTO) {
         try {
 
             const t = await Transacao.sequelize.transaction();
 
-            const { id } = req.params;
             const { data, descricao, valor, contaId, categoriaId, favorecidoId } = transacaoDTO;
 
             const obj = await Transacao.findByPk(id, { include: { all: true, nested: true }, transaction: t });
@@ -148,13 +148,14 @@ class TransacaoService {
             throw error;
         }
     }
-    static async regrasDeNegocio(obj, transaction) {
+
+    static async regrasDeNegocio(selectedTransacao, transaction) {
         try {
             // Atualiza o saldo na conta
-            await ContaService.atualizarSaldo(obj.contaId, obj.valor, obj.categoria.tipo.id, transaction);
+            await ContaService.atualizarSaldo(selectedTransacao.contaId, selectedTransacao.valor, transaction);
     
             // Verificar se existe orçamento
-            const orcamentosId = await OrcamentoService.findByPeriodAndCategory(obj.data, obj.categoriaId);
+            const orcamentosId = await OrcamentoService.findByPeriodAndCategory(selectedTransacao.data, selectedTransacao.categoriaId);
     
             // Se existir orçamento: Atualizar valor disponível
             if (orcamentosId.length > 0) {
@@ -163,8 +164,8 @@ class TransacaoService {
                     const orcamentoId = orcamento.id; // Acessando corretamente o valor do orcamentoId
                     const limiteDisponivel = await OrcamentoService.atualizarValorUtilizado(
                         orcamentoId,
-                        obj.categoriaId,
-                        obj.valor,
+                        selectedTransacao.categoriaId,
+                        selectedTransacao.valor,
                         transaction
                     );
                     mensagem = mensagem.concat(`Você ainda pode utilizar R$ ${limiteDisponivel} para essa categoria no orçamento ${orcamentoId}. `);

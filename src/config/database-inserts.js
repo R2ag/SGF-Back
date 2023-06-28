@@ -55,8 +55,8 @@ function databaseInserts() {
             const favorecido4 = await Favorecido.create({ nome: "Favorecido4", ramo: "Ramo 0004", cpfOuCnpj: "44.444.444/0001-00", email: "favorecido4@email.com" });
 
             //tipo
-            const tipo1 = await Tipo.create({ nome: "entrada" });
-            const tipo2 = await Tipo.create({ nome: "saida" });
+            const tipo1 = await Tipo.create({ nome: "Crédito" });
+            const tipo2 = await Tipo.create({ nome: "Débito" });
 
             //categoria
             const categoria1 = await Categoria.create({ nome: "Categoria1", tipoId: 1, descricao: "", observacao: "observação1" });

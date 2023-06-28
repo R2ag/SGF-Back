@@ -16,8 +16,8 @@ class TransacaoController {
 
     static async create(req, res, next) {
         try {
-            const { data, descricao, valor, contaId, favorecidoId, categoriaId } = req.body;
-            const transacaoDTO = new TransacaoDTO(data, descricao, valor, contaId, favorecidoId, categoriaId, next);
+            const { data, descricao, valor, contaId, favorecidoId, categoriaId, tipoId } = req.body;
+            const transacaoDTO = new TransacaoDTO(data, descricao, valor, contaId, favorecidoId, categoriaId, tipoId, next);
             if (transacaoDTO.isValid) {
                 const createdTransacao = TransacaoService.create(transacaoDTO);
                 res.status(201).json(createdTransacao);
@@ -29,10 +29,11 @@ class TransacaoController {
 
     static async update(req, res, next) {
         try {
-            const { data, descricao, valor, contaId, favorecidoId, categoriaId } = req.body;
-            const transacaoDTO = new TransacaoDTO(data, descricao, valor, contaId, favorecidoId, categoriaId, next);
+            const {id} = req.params;
+            const { data, descricao, valor, contaId, favorecidoId, categoriaId, tipoId } = req.body;
+            const transacaoDTO = new TransacaoDTO(data, descricao, valor, contaId, favorecidoId, categoriaId, tipoId, next);
             if (transacaoDTO.isValid) {
-                const updatedTransacao = TransacaoService.update(req, transacaoDTO);
+                const updatedTransacao = TransacaoService.update(id, transacaoDTO);
                 res.status(200).json(updatedTransacao);
             }
         } catch (error) {
