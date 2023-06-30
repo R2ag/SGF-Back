@@ -14,9 +14,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "joi": "^17.9.2",
     "pg": "^8.10.0",
     "sequelize": "^6.30.0",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "dotenv-safe": "^8.2.0",

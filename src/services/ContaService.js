@@ -11,9 +11,8 @@ class ContaService {
         }
     }
 
-    static async findByPk(req) {
+    static async findByPk(id) {
         try {
-            const { id } = req.params;
             const obj = await Conta.findByPk(id, { include: { all: true, nested: true } });
             return obj;
         } catch (error) {
@@ -22,10 +21,10 @@ class ContaService {
         }
     }
 
-    static async create(req) {
+    static async create(contaDTO) {
         try {
-            const { nome, tipo, descricao, saldo, usuario } = req.body;
-            const obj = await Conta.create({ nome, tipo, descricao, saldo, usuarioId: usuario.id });
+            const { nome, tipo, descricao, saldo, usuarioId } = contaDTO;
+            const obj = await Conta.create({ nome, tipo, descricao, saldo, usuarioId});
             return await Conta.findByPk(obj.id, { include: { all: true, nested: true } });
         } catch (error) {
             console.error("Erro ao criar conta:", error);
@@ -33,13 +32,12 @@ class ContaService {
         }
     }
 
-    static async update(req) {
+    static async update(id, contaDTO) {
         try {
-            const { id } = req.params;
-            const { nome, tipo, descricao, saldo, usuario } = req.body;
-            const obj = await Conta.findByPk(id, { include: { all: true, nested: true } });
+            const { nome, tipo, descricao, saldo, usuarioId } = contaDTO;
+            const obj = await Conta.findByPk(id);
             if (obj == null) throw 'Conta não encontrada';
-            Object.assign(obj, { nome, tipo, descricao, saldo, usuarioId: usuario.id });
+            Object.assign(obj, { nome, tipo, descricao, saldo, usuarioId});
             await obj.save();
             return obj;
         } catch (error) {
@@ -48,9 +46,8 @@ class ContaService {
         }
     }
 
-    static async delete(req) {
+    static async delete(id) {
         try {
-            const { id } = req.params;
             const obj = await Conta.findByPk(id);
             if (obj == null) throw 'Conta não encontrada';
 
@@ -65,19 +62,14 @@ class ContaService {
         }
     }
 
-    static async atualizarSaldo(idConta, valorTransacao, idTipoTransacao, transaction) {
+    static async atualizarSaldo(idConta, valorTransacao, transaction) {
         try {
-            const obj = await Conta.findByPk(idConta);
-            if (obj == null) throw 'Conta não encontrada';
+            const selectedConta = await Conta.findByPk(idConta);
+            if (selectedConta == null) throw 'Conta não encontrada';
 
-            // Verifica se a transação é uma entrada e atualiza o saldo.
-            if (idTipoTransacao == 1) {
-                await obj.increment('saldo', { by: valorTransacao, transaction });
-            } else {
-                await obj.decrement('saldo', { by: valorTransacao, transaction });
-            }
-
-            return obj;
+            await selectedConta.increment('saldo', { by: valorTransacao, transaction });
+            
+            return selectedConta;
         } catch (error) {
             console.error("Erro ao atualizar saldo da conta:", error);
             throw error;

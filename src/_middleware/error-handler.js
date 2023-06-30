@@ -11,10 +11,15 @@ function errorHandler(err, req, res, next){
                 return res.status(400).json({ message: "Não foi possivel encontrar o registro associado a esta inserção/alteração." });
             } else if (err.name == "SequelizeUniqueConstraintError") {
                 return res.status(400).json({ message: "Já existe um iten cadastrado com o ID informado." });
-            } else {
+            } else if (err.name == "ValidationError") {
+                return res.status(400).json({ message: err.message });
+            
+            }else {
                 return res.status(500).json({ message: err.message });
             }
     }
 }
+
+
 
 export default errorHandler;

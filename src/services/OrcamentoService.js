@@ -13,9 +13,8 @@ class OrcamentoService {
         }
     }
 
-    static async findByPk(req) {
+    static async findByPk(id) {
         try {
-            const { id } = req.params;
             const obj = await Orcamento.findByPk(id, { include: { all: true, nested: true } });
             return obj;
         } catch (error) {
@@ -24,9 +23,9 @@ class OrcamentoService {
         }
     }
 
-    static async create(req) {
+    static async create(orcamentoDTO) {
         try {
-            const { dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias } = req.body;
+            const { dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias } = orcamentoDTO;
 
             if (!orcamentosCategorias || orcamentosCategorias.length === 0) {
                 throw new Error("É necessário fornecer pelo menos uma categoria para o orçamento.");
@@ -42,9 +41,11 @@ class OrcamentoService {
             for (const orcamentoCategoriaData of orcamentosCategorias) {
                 const { descricao, valor, categoriaId } = orcamentoCategoriaData;
 
+                const valorInicial = 0;
                 await OrcamentoCategoria.create({
                     descricao,
                     valor,
+                    valorUtilizado: valorInicial,
                     orcamentoId: orcamento.id,
                     categoriaId,
                 });
@@ -56,59 +57,64 @@ class OrcamentoService {
         }
     }
 
-    static async update(req) {
-        const { id } = req.params;
-        const { dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias } = req.body;
+    static async update(id, orcamentoDTO) {
+        try {
+            const { dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias } = orcamentoDTO;
 
-        const orcamento = await Orcamento.findByPk(id);
+            const orcamento = await Orcamento.findByPk(id);
 
-        if (!orcamento) {
-            throw new Error("Orcamento não encontrado");
-        }
-
-        orcamento.dataInicio = dataInicio;
-        orcamento.dataFinal = dataFinal;
-        orcamento.valorTotal = valorTotal;
-        orcamento.usuarioId = usuarioId;
-
-        await orcamento.save();
-
-        if (orcamentosCategorias && orcamentosCategorias.length > 0) {
-            await orcamento.setOrcamentosCategorias([]);
-
-            for (const orcamentoCategoriaData of orcamentosCategorias) {
-                const { descricao, valor, categoriaId } = orcamentoCategoriaData;
-
-                await OrcamentoCategoria.create({
-                    descricao,
-                    valor,
-                    orcamentoId: orcamento.id,
-                    categoriaId,
-                });
+            if (!orcamento) {
+                throw new Error("Orcamento não encontrado");
             }
-        }
 
-        return orcamento;
+            orcamento.dataInicio = dataInicio;
+            orcamento.dataFinal = dataFinal;
+            orcamento.valorTotal = valorTotal;
+            orcamento.usuarioId = usuarioId;
+
+            await orcamento.save();
+
+            if (orcamentosCategorias && orcamentosCategorias.length > 0) {
+                await orcamento.setOrcamentosCategorias([]);
+
+                for (const orcamentoCategoriaData of orcamentosCategorias) {
+                    const { descricao, valor, categoriaId } = orcamentoCategoriaData;
+
+                    await OrcamentoCategoria.create({
+                        descricao,
+                        valor,
+                        orcamentoId: orcamento.id,
+                        categoriaId,
+                    });
+                }
+            }
+
+            return orcamento;
+        } catch (error) {
+            throw new Error("Erro ao Atualizar o orçamento. Verifique os dados fornecidos.");
+        }
     }
 
-    static async delete(req) {
-        const { id } = req.params;
+    static async delete(id) {
+        try {
 
-        const orcamento = await Orcamento.findByPk(id);
+            const orcamento = await Orcamento.findByPk(id);
 
-        if (!orcamento) {
-            throw new Error("Orcamento não encontrado");
+            if (!orcamento) {
+                throw new Error("Orcamento não encontrado");
+            }
+
+            await orcamento.destroy();
+
+            return orcamento;
+        } catch (error) {
+            throw new Error("Erro ao Deletar o orçamento.");
         }
-
-        await orcamento.destroy();
-
-        return orcamento;
     }
 
     //Regra de negocio, o sistema consulta no banco as categorias utilizadas no Orçamento anterior e as sugere ao usuário
-    static async findByUsuario(req) {
+    static async findByUsuario(usuarioId) {
         try {
-            const { usuarioId } = req.params;
             const objs = await Orcamento.findAll({
                 where: { usuarioId: usuarioId }, include: [{ model: OrcamentoCategoria, as: 'orcamentosCategorias', attributes: ['descricao', 'valor', 'categoriaId'] }]
             });
@@ -126,7 +132,15 @@ class OrcamentoService {
     static async findByPeriodAndCategory(data, categoriaId) {
         try {
             const orcamentoId = await Orcamento.sequelize.query(
-                "SELECT orcamentos.id FROM orcamentos JOIN orcamentoscategorias ON orcamentos.id = orcamentoscategorias.orcamento_id WHERE orcamentos.data_inicio <= :data AND orcamentos.data_final >= :data AND orcamentoscategorias.categoria_id = :categoria_id",
+                `SELECT 
+                    orcamentos.id 
+                FROM 
+                    orcamentos 
+                    JOIN orcamentoscategorias ON orcamentos.id = orcamentoscategorias.orcamento_id 
+                WHERE 
+                    orcamentos.data_inicio <= :data AND 
+                    orcamentos.data_final >= :data AND 
+                    orcamentoscategorias.categoria_id = :categoria_id`,
                 { replacements: { data: data, categoria_id: categoriaId }, type: Sequelize.QueryTypes.SELECT }
             );
 
@@ -139,20 +153,20 @@ class OrcamentoService {
 
     static async atualizarValorUtilizado(idOrcamento, idCategoria, valorTransacao, transaction) {
         try {
-            const orcamentoCategoria = await OrcamentoCategoria.findOne({
+            const selectedOrcamentoCategoria = await OrcamentoCategoria.findOne({
                 where: {
                     orcamentoId: idOrcamento,
                     categoriaId: idCategoria
                 }
             });
 
-            if (!orcamentoCategoria) {
+            if (!selectedOrcamentoCategoria) {
                 throw new Error('Categoria de orçamento não encontrada!');
             }
 
-            orcamentoCategoria.valorUtilizado += valorTransacao;
-            await orcamentoCategoria.save(transaction);
-            const valorDisponivel = orcamentoCategoria.valor - orcamentoCategoria.valorUtilizado;
+            const valorDisponivel = selectedOrcamentoCategoria.valor - (selectedOrcamentoCategoria.valorUtilizado + valorTransacao);
+            await selectedOrcamentoCategoria.increment('valor_utilizado', { by: valorTransacao, transaction });
+
             return valorDisponivel;
         } catch (error) {
             console.error("Erro ao atualizar valor utilizado do orçamento:", error);
@@ -162,13 +176,12 @@ class OrcamentoService {
 
     // Relatorio que vai listar as categorias e comparar o valor orçado com o valor utilizado
 
-    static async findGraficoOfValoresOrcadosETransacionadosByOrcamento(req) {
-        const { id } = req.params;
+    static async findGraficoOfValoresOrcadosETransacionadosByOrcamento(id) {
         const objs = await Orcamento.sequelize.query(`
             SELECT
-                categorias.nome AS 'Categoria',
-                orcamentoscategorias.valor AS 'Valor Orçado',
-                orcamentoscategorias.valor_utilizado AS 'Valor Utilizado'
+                categorias.nome AS "Categoria",
+                orcamentoscategorias.valor AS "Valor Orçado",
+                orcamentoscategorias.valor_utilizado AS "Valor Utilizado"
             FROM 
                 orcamentos
                 JOIN orcamentoscategorias ON orcamentos.id = orcamentoscategorias.orcamento_id
@@ -182,13 +195,12 @@ class OrcamentoService {
 
     //relatorio de categorias, representando o valor relativo de cada categoria orçada do usuario em relação ao total orçado no período desejado a ser pesquisado por porcentagem
 
-    static async findGraficoOfDivisaoDoTotalOrcadoByOrcamento(req) {
-        const { usuarioId, dataInicio, dataFinal } = req.params;
+    static async findGraficoOfDivisaoDoTotalOrcadoByOrcamento(usuarioId, dataInicio, dataFinal) {
         const objs = await Orcamento.sequelize.query(`
             SELECT 
-                oc.categoria_id AS categoriaId, 
-                c.nome AS Nome, 
-                SUM(oc.valor) AS totalGasto 
+                oc.categoria_id AS "categoriaId", 
+                c.nome AS "Nome", 
+                SUM(oc.valor) AS "totalGasto" 
             FROM 
                 orcamentos o 
                 JOIN orcamentoscategorias oc ON o.id = oc.orcamento_id 

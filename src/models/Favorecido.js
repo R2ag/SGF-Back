@@ -36,7 +36,6 @@ class Favorecido extends Model {
                 type: DataTypes.STRING,
                 validate: {
                     isEmail: true,
-                    notEmpty: { msg: "O email deve ser preenchido!" },
                 }
             }
         }, { 

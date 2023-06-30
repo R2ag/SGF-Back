@@ -57,3 +57,4 @@ class OrcamentoCategoria extends Model {
 }
 
 export { OrcamentoCategoria };
+

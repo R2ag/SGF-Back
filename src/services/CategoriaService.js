@@ -11,9 +11,8 @@ class CategoriaService {
         }
     }
 
-    static async findByPk(req) {
+    static async findByPk(id) {
         try {
-            const { id } = req.params;
             const obj = await Categoria.findByPk(id, { include: { all: true, nested: true } });
             return obj;
         } catch (error) {
@@ -22,11 +21,10 @@ class CategoriaService {
         }
     }
 
-    static async create(req) {
+    static async create(categoriaDTO) {
         try {
-            const { nome, descricao, observacao, tipo } = req.body;
-            if (tipo == null) throw 'O tipo da categoria deve ser informado!';
-            const obj = await Categoria.create({ nome, descricao, observacao, tipoId: tipo.id });
+            const { nome, descricao, observacao, tipoId } = categoriaDTO;
+            const obj = await Categoria.create({ nome, descricao, observacao, tipoId});
             return await Categoria.findByPk(obj.id, { include: { all: true, nested: true } });
         } catch (error) {
             console.error("Erro ao criar categoria:", error);
@@ -34,13 +32,12 @@ class CategoriaService {
         }
     }
 
-    static async update(req) {
+    static async update(id, categoriaDTO) {
         try {
-            const { id } = req.params;
-            const { nome, descricao, observacao, tipo } = req.body;
-            const obj = await Categoria.findByPk(id, { include: { all: true, nested: true } });
+            const { nome, descricao, observacao, tipoId } = categoriaDTO;
+            const obj = await Categoria.findByPk(id);
             if (obj == null) throw 'Categoria não encontrada';
-            Object.assign(obj, { nome, descricao, observacao, tipoId: tipo.id });
+            Object.assign(obj, { nome, descricao, observacao, tipoId});
             await obj.save();
             return await Categoria.findByPk(id, { include: { all: true, nested: true } });
         } catch (error) {
@@ -49,9 +46,8 @@ class CategoriaService {
         }
     }
 
-    static async delete(req) {
+    static async delete(id) {
         try {
-            const { id } = req.params;
             const obj = await Categoria.findByPk(id);
             if (obj == null) throw 'Categoria não encontrada';
 
