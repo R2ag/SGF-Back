@@ -1,5 +1,5 @@
 import { FavorecidoService } from "../services/FavorecidoService.js";
-import { FavorecidoDTO } from "../dto/request/FavorecidoDTO";
+import { FavorecidoDTO } from "../dto/request/FavorecidoDTO.js";
 
 class FavorecidoController {
 
@@ -11,7 +11,8 @@ class FavorecidoController {
     }
 
     static async findByPk(req, res, next) {
-        FavorecidoService.findByPk(req)
+        const { id } = req.params;
+        FavorecidoService.findByPk(id)
             .then(obj => res.json(obj))
             .catch(next);
     }
@@ -31,10 +32,11 @@ class FavorecidoController {
 
     static async update(req, res, next) {
         try {
+            const { id } = req.params;
             const { nome, ramo, cpfOuCnpj, email } = req.body;
             const favorecidoDTO = new FavorecidoDTO(nome, ramo, cpfOuCnpj, email, next);
             if (favorecidoDTO.isValid) {
-                const updatedFavorecido = FavorecidoService.update(req, favorecidoDTO);
+                const updatedFavorecido = FavorecidoService.update(id, favorecidoDTO);
                 res.status(200).json(updatedFavorecido);
             }
         } catch (error) {
@@ -44,7 +46,8 @@ class FavorecidoController {
     }
 
     static async delete(req, res, next) {
-        FavorecidoService.delete(req)
+        const { id } = req.params;
+        FavorecidoService.delete(id)
             .then(obj => res.json(obj))
             .catch(next);
 

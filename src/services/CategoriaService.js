@@ -11,9 +11,8 @@ class CategoriaService {
         }
     }
 
-    static async findByPk(req) {
+    static async findByPk(id) {
         try {
-            const { id } = req.params;
             const obj = await Categoria.findByPk(id, { include: { all: true, nested: true } });
             return obj;
         } catch (error) {
@@ -33,9 +32,8 @@ class CategoriaService {
         }
     }
 
-    static async update(req, categoriaDTO) {
+    static async update(id, categoriaDTO) {
         try {
-            const { id } = req.params;
             const { nome, descricao, observacao, tipoId } = categoriaDTO;
             const obj = await Categoria.findByPk(id);
             if (obj == null) throw 'Categoria não encontrada';
@@ -48,9 +46,8 @@ class CategoriaService {
         }
     }
 
-    static async delete(req) {
+    static async delete(id) {
         try {
-            const { id } = req.params;
             const obj = await Categoria.findByPk(id);
             if (obj == null) throw 'Categoria não encontrada';
 

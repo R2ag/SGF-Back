@@ -13,7 +13,8 @@ class OrcamentoController {
 
     static async findByPk(req, res, next) {
         try {
-            const obj = await OrcamentoService.findByPk(req);
+            const { id } = req.params;
+            const obj = await OrcamentoService.findByPk(id);
             res.json(obj);
         } catch (error) {
             next(error);
@@ -22,7 +23,8 @@ class OrcamentoController {
 
     static async findByUsuario(req, res, next) {
         try {
-            const objs = await OrcamentoService.findByUsuario(req);
+            const { usuarioId } = req.params;
+            const objs = await OrcamentoService.findByUsuario(usuarioId);
             res.json(objs);
         } catch (error) {
             next(error);
@@ -31,8 +33,8 @@ class OrcamentoController {
 
     static async create(req, res, next) {
         try {
-            const { dataInicio, dataFinal, valorTotal, usuarioId } = req.body;
-            const orcamentoDTO = new OrcamentoDTO(dataInicio, dataFinal, valorTotal, usuarioId, next)
+            const { dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias } = req.body;
+            const orcamentoDTO = new OrcamentoDTO(dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias, next)
             if (orcamentoDTO.isValid) {
                 const createdOrcamento = await OrcamentoService.create(orcamentoDTO);
                 res.status(201).json(createdOrcamento);
@@ -44,10 +46,11 @@ class OrcamentoController {
 
     static async update(req, res, next) {
         try {
-            const { dataInicio, dataFinal, valorTotal, usuarioId } = req.body;
-            const orcamentoDTO = new OrcamentoDTO(dataInicio, dataFinal, valorTotal, usuarioId, next)
+            const { id } = req.params;
+            const { dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias } = req.body;
+            const orcamentoDTO = new OrcamentoDTO(dataInicio, dataFinal, valorTotal, usuarioId, orcamentosCategorias, next)
             if (orcamentoDTO.isValid) {
-                const obj = await OrcamentoService.update(req, orcamentoDTO);
+                const obj = await OrcamentoService.update(id, orcamentoDTO);
                 res.status(200).json(obj);
             }
 
@@ -58,7 +61,8 @@ class OrcamentoController {
 
     static async delete(req, res, next) {
         try {
-            const obj = await OrcamentoService.delete(req);
+            const { id } = req.params;
+            const obj = await OrcamentoService.delete(id);
             res.json(obj);
         } catch (error) {
             next(error);
@@ -66,13 +70,15 @@ class OrcamentoController {
     }
 
     static async findGraficoOfDivisaoDoTotalOrcadoByOrcamento(req, res, next) {
-        OrcamentoService.findGraficoOfDivisaoDoTotalOrcadoByOrcamento(req)
+        const { id } = req.params;
+        OrcamentoService.findGraficoOfDivisaoDoTotalOrcadoByOrcamento(id)
             .then(objs => res.json(objs))
             .catch(next);
     }
 
     static async findGraficoOfValoresOrcadosETransacionadosByOrcamento(req, res, next) {
-        OrcamentoService.findGraficoOfValoresOrcadosETransacionadosByOrcamento(req)
+        const { usuarioId, dataInicio, dataFinal } = req.params;
+        OrcamentoService.findGraficoOfValoresOrcadosETransacionadosByOrcamento(usuarioId, dataInicio, dataFinal)
             .then(objs => res.json(objs))
             .catch(next);
     }

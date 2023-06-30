@@ -11,7 +11,8 @@ class CategoriaController {
     }
 
     static async findByPk(req, res, next) {
-        CategoriaService.findByPk(req)
+        const { id } = req.params;
+        CategoriaService.findByPk(id)
             .then(obj => res.json(obj))
             .catch(next);
     }
@@ -31,10 +32,11 @@ class CategoriaController {
 
     static async update(req, res, next) {
         try {
+            const { id } = req.params;
             const { nome, descricao, observacao, tipoId } = req.body;
             const categoriaDTO = new CategoriaDTO(nome, descricao, observacao, tipoId, next);
             if (categoriaDTO.isValid) {
-                const updatedCategoria = await CategoriaService.update(req, categoriaDTO);
+                const updatedCategoria = await CategoriaService.update(id, categoriaDTO);
                 res.status(200).json(updatedCategoria);
             }
         } catch (error) {
@@ -43,7 +45,8 @@ class CategoriaController {
     }
 
     static async delete(req, res, next) {
-        CategoriaService.delete(req)
+        const { id } = req.params;
+        CategoriaService.delete(id)
             .then(obj => res.json(obj))
             .catch(next);
 

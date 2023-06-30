@@ -11,9 +11,8 @@ class FavorecidoService {
         }
     }
 
-    static async findByPk(req) {
+    static async findByPk(id) {
         try {
-            const { id } = req.params;
             const obj = await Favorecido.findByPk(id, { include: { all: true, nested: true } });
             return obj;
         } catch (error) {
@@ -33,9 +32,8 @@ class FavorecidoService {
         }
     }
 
-    static async update(req, favorecidoDTO) {
+    static async update(id, favorecidoDTO) {
         try {
-            const { id } = req.params;
             const { nome, ramo, cpfOuCnpj, email } = favorecidoDTO;
             const obj = await Favorecido.findByPk(id);
             if (obj == null) throw 'Favorecido não encontrado';
@@ -47,9 +45,8 @@ class FavorecidoService {
         }
     }
 
-    static async delete(req) {
+    static async delete(id) {
         try {
-            const { id } = req.params;
             const obj = await Favorecido.findByPk(id);
             if (obj == null) throw 'Favorecido não encontrado';
 

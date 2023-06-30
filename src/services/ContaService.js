@@ -11,9 +11,8 @@ class ContaService {
         }
     }
 
-    static async findByPk(req) {
+    static async findByPk(id) {
         try {
-            const { id } = req.params;
             const obj = await Conta.findByPk(id, { include: { all: true, nested: true } });
             return obj;
         } catch (error) {
@@ -33,9 +32,8 @@ class ContaService {
         }
     }
 
-    static async update(req, contaDTO) {
+    static async update(id, contaDTO) {
         try {
-            const { id } = req.params;
             const { nome, tipo, descricao, saldo, usuarioId } = contaDTO;
             const obj = await Conta.findByPk(id);
             if (obj == null) throw 'Conta não encontrada';
@@ -48,9 +46,8 @@ class ContaService {
         }
     }
 
-    static async delete(req) {
+    static async delete(id) {
         try {
-            const { id } = req.params;
             const obj = await Conta.findByPk(id);
             if (obj == null) throw 'Conta não encontrada';
 

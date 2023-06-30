@@ -11,7 +11,8 @@ class ContaController {
     }
 
     static async findByPk(req, res, next) {
-        ContaService.findByPk(req)
+        const { id } = req.params;
+        ContaService.findByPk(id)
             .then(obj => res.json(obj))
             .catch(next);
     }
@@ -33,10 +34,11 @@ class ContaController {
 
     static async update(req, res, next) {
         try {
+            const { id } = req.params;
             const { nome, tipo, descricao, saldo, usuarioId } = req.body;
             const contaDTO = new ContaDTO(nome, tipo, descricao, saldo, usuarioId, next);
             if (contaDTO.isValid) {
-                const updatedConta = await ContaService.update(req, contaDTO);
+                const updatedConta = await ContaService.update(id, contaDTO);
                 res.status(200).json(updatedConta);
             }
 
@@ -46,7 +48,8 @@ class ContaController {
     }
 
     static async delete(req, res, next) {
-        ContaService.delete(req)
+        const { id } = req.params;
+        ContaService.delete(id)
             .then(obj => res.json(obj))
             .catch(next);
 
