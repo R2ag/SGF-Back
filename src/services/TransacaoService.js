@@ -221,11 +221,11 @@ class TransacaoService {
     static async fyndByContaEPeriodo(idConta, dataInicial, dataFinal) {
         objs = await Transacao.sequelize.query(`
             SELECT
-                transacoes.data AS 'Data',
-                transacoes.valor AS 'Valor',
-                categorias.nome AS 'Categoria',
-                favorecidos.nome AS 'Favorecido',
-                transacoes.descricao AS 'Descricao'
+                transacoes.data AS "Data",
+                transacoes.valor AS "Valor",
+                categorias.nome AS "Categoria",
+                favorecidos.nome AS "Favorecido",
+                transacoes.descricao AS "Descricao"
             FROM
                 transacoes
                 JOIN categorias ON transacoes.categoria_id = categorias.id
@@ -244,11 +244,11 @@ class TransacaoService {
     static async fyndByFavorecidoEPeriodo(idFavorecido, dataInicial, dataFinal ) {
       objs = await Transacao.sequelize.query(`
             SELECT
-                transacoes.data AS 'Data',
-                transacoes.valor AS 'Valor',
-                categorias.nome AS 'Categoria',
-                contas.nome AS 'Conta',
-                transacoes.descricao AS 'Descricao'
+                transacoes.data AS "Data",
+                transacoes.valor AS "Valor",
+                categorias.nome AS "Categoria",
+                contas.nome AS "Conta",
+                transacoes.descricao AS "Descricao"
             FROM
                 transacoes
                 JOIN categorias ON transacoes.categoria_id = categorias.id
@@ -266,8 +266,8 @@ class TransacaoService {
     static async listByCategoriaEPeriodo(dataInicial, dataFinal) {
        objs = await Transacao.sequelize.query(`
             SELECT
-                contas.nome AS 'Conta',
-                SUM(transacoes.valor) AS 'Valor'
+                contas.nome AS "Conta",
+                SUM(transacoes.valor) AS "Valor"
             FROM
                 transacoes
                 JOIN categorias ON transacoes.categoria_id = categorias.id
