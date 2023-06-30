@@ -34,9 +34,14 @@ function databaseInserts() {
     OrcamentoCategoria.associate(sequelize.models);
 
     (async () => {
-        try {
-            await sequelize.sync({ force: true });
 
+        await sequelize.sync();
+            
+        /*
+        try {
+            await sequelize.sync({ });
+            
+            
             const usuario1 = await Usuario.create({ nome: "Usuario1", cpf: "111.111.111-11", email: "usuario1@email.com", usuario: "usuario1", senha: "123456" });
             const usuario2 = await Usuario.create({ nome: "Usuario2", cpf: "222.222.222-22", email: "usuario2@email.com", usuario: "usuario2", senha: "123456" });
             const usuario3 = await Usuario.create({ nome: "Usuario3", cpf: "333.333.333-33", email: "usuario3@email.com", usuario: "usuario3", senha: "123456" });
@@ -89,12 +94,12 @@ function databaseInserts() {
             const orcamentoCategoria6 = await OrcamentoCategoria.create({ valor: "2000", valorUtilizado: 0, descricao: "Descrição 0000", categoriaId: 3, orcamentoId: 6 });
 
             console.log("Dados inseridos com sucesso!");
-
+            
         } catch (error) {
             console.error("Erro ao inserir dados:", error);
             throw error;
         }
-
+        */
     })();
 
 }

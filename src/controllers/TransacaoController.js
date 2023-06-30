@@ -65,6 +65,7 @@ class TransacaoController {
             .catch(next);
     }
 
+
     static async fyndByFavorecidoEPeriodo(req, res, next) {
         const { idFavorecido, dataInicial, dataFinal } = req.params;
         TransacaoService.fyndByFavorecidoEPeriodo(idFavorecido, dataInicial, dataFinal)

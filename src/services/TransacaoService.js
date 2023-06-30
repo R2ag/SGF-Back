@@ -206,6 +206,7 @@ class TransacaoService {
                 transacoes.descricao AS "Descricao"
             FROM
                 transacoes
+                JOIN categorias ON transacoes.categoria_id = categorias.id
                 JOIN contas ON transacoes.conta_id = contas.id
                 JOIN favorecidos ON transacoes.favorecido_id = favorecidos.id
             WHERE
@@ -228,6 +229,7 @@ class TransacaoService {
             FROM
                 transacoes
                 JOIN categorias ON transacoes.categoria_id = categorias.id
+                JOIN contas ON transacoes.conta_id = contas.id
                 JOIN favorecidos ON transacoes.favorecido_id = favorecidos.id
             WHERE
                 contas.id = :conta AND 
@@ -238,8 +240,9 @@ class TransacaoService {
         return objs;
     }
 
+
     static async fyndByFavorecidoEPeriodo(idFavorecido, dataInicial, dataFinal ) {
-        objs = await Transacao.sequelize.query(`
+      objs = await Transacao.sequelize.query(`
             SELECT
                 transacoes.data AS 'Data',
                 transacoes.valor AS 'Valor',
@@ -250,6 +253,7 @@ class TransacaoService {
                 transacoes
                 JOIN categorias ON transacoes.categoria_id = categorias.id
                 JOIN contas ON transacoes.conta_id = contas.id
+                JOIN favorecidos ON transacoes.favorecido_id = favorecidos.id
             WHERE
                 favorecidos.id = :favorecido AND 
                 transacoes.data <= :data_inicial AND 
