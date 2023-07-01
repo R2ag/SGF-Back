@@ -68,11 +68,11 @@ class TransacaoService {
 
             const { data, descricao, valor, contaId, categoriaId, favorecidoId } = transacaoDTO;
 
-            const savedTransacao = await Transacao.findByPk(id, { transaction: t });
+            const savedTransacao = await Transacao.findByPk(id);
 
             let mensagem = '';
 
-            if (savedTransacao.contaId = !contaId) {
+            if (savedTransacao.contaId != contaId) {
                 await ContaService.atualizarSaldo(savedTransacao.contaId, (savedTransacao.valor * (-1)), t);
                 await ContaService.atualizarSaldo(contaId, valor, t);
             } else {
@@ -85,7 +85,6 @@ class TransacaoService {
 
             if (savedTransacao.categoriaId != categoriaId || savedTransacao.data != data) {
                 const mensagem1 = await this.atualizarOrcamentos(savedTransacao.data, savedTransacao.categoriaId, (savedTransacao.valor * (-1)), t);
-
                 const mensagem2 = await this.atualizarOrcamentos(data, categoriaId, Math.abs(valor), t);
 
                 mensagem = mensagem.concat(mensagem1);
@@ -95,7 +94,6 @@ class TransacaoService {
                     const diferencaValores = valor - savedTransacao.valor;
 
                     const mensagem3 = await this.atualizarOrcamentos(data, categoriaId, diferencaValores, t);
-
                     mensagem = mensagem.concat(mensagem3);
                 }
             }
@@ -112,7 +110,7 @@ class TransacaoService {
 
             let messageResponse;
 
-            if (mensagem = ! '') {
+            if (mensagem != '') {
                 messageResponse = new MessageResponseDTO(mensagem);
             } else {
                 messageResponse = new MessageResponseDTO("Transação atualizada com sucesso!");
@@ -197,7 +195,7 @@ class TransacaoService {
     //RELATÓRIOS
 
     static async fyndByCategoriaEPeriodo(idCategoria, dataInicial, dataFinal) {
-        objs = await Transacao.sequelize.query(`
+        const objs = await Transacao.sequelize.query(`
             SELECT
                 transacoes.data AS "Data",
                 transacoes.valor AS "Valor",
@@ -211,15 +209,15 @@ class TransacaoService {
                 JOIN favorecidos ON transacoes.favorecido_id = favorecidos.id
             WHERE
                 categorias.id = :categoria AND 
-                transacoes.data <= :data_inicial AND 
-                transacoes.data >= :data_final
+                transacoes.data >= :data_inicial AND 
+                transacoes.data <= :data_final
         `, { replacements: { categoria: idCategoria, data_inicial: dataInicial, data_final: dataFinal }, type: QueryTypes.SELECT });
 
         return objs;
     }
 
     static async fyndByContaEPeriodo(idConta, dataInicial, dataFinal) {
-        objs = await Transacao.sequelize.query(`
+        const objs = await Transacao.sequelize.query(`
             SELECT
                 transacoes.data AS "Data",
                 transacoes.valor AS "Valor",
@@ -233,16 +231,16 @@ class TransacaoService {
                 JOIN favorecidos ON transacoes.favorecido_id = favorecidos.id
             WHERE
                 contas.id = :conta AND 
-                transacoes.data <= :data_inicial AND 
-                transacoes.data >= :data_final
-        `, { replacements: { conta: idConta, data_inicial: dataInicial, data_final: dataFinal }, type: QueryTypes.SELECT });
+                transacoes.data >= :data_inicial AND 
+                transacoes.data <= :data_final
+        `, { replacements: { conta: idConta, data_inicial: dataInicial, data_final: dataFinal }, type: QueryTypes.SELECT});
 
         return objs;
     }
 
 
     static async fyndByFavorecidoEPeriodo(idFavorecido, dataInicial, dataFinal ) {
-      objs = await Transacao.sequelize.query(`
+        const objs = await Transacao.sequelize.query(`
             SELECT
                 transacoes.data AS "Data",
                 transacoes.valor AS "Valor",
@@ -256,24 +254,25 @@ class TransacaoService {
                 JOIN favorecidos ON transacoes.favorecido_id = favorecidos.id
             WHERE
                 favorecidos.id = :favorecido AND 
-                transacoes.data <= :data_inicial AND 
-                transacoes.data >= :data_final
-        `, { replacements: { favorecido: idFavorecido, data_inicial: dataInicial, data_final: dataFinal }, type: QueryTypes.SELECT });
+                transacoes.data >= :data_inicial AND 
+                transacoes.data <= :data_final
+        `, { replacements: { favorecido: idFavorecido, data_inicial: dataInicial, data_final: dataFinal }, type: QueryTypes.SELECT});
 
         return objs;
     }
 
     static async listByCategoriaEPeriodo(dataInicial, dataFinal) {
-       objs = await Transacao.sequelize.query(`
+        const objs = await Transacao.sequelize.query(`
             SELECT
                 contas.nome AS "Conta",
                 SUM(transacoes.valor) AS "Valor"
             FROM
                 transacoes
                 JOIN categorias ON transacoes.categoria_id = categorias.id
+                JOIN contas ON transacoes.conta_id = contas.id
             WHERE 
-                transacoes.data <= :data_inicial AND 
-                transacoes.data >= :data_final
+                transacoes.data >= :data_inicial AND 
+                transacoes.data <= :data_final
             GROUP BY
                 contas.nome
         `, { replacements: { data_inicial: dataInicial, data_final: dataFinal }, type: QueryTypes.SELECT });

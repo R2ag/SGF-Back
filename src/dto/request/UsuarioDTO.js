@@ -16,7 +16,7 @@ class UsuarioDTO {
         this.usuario = usuario;
         this.senha = senha;
 
-        this.isValid = validateData(next);
+        this.isValid = this.validateData(next);
     }
 
     validateData(next){

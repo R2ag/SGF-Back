@@ -22,7 +22,7 @@ class FavorecidoController {
             const { nome, ramo, cpfOuCnpj, email } = req.body;
             const favorecidoDTO = new FavorecidoDTO(nome, ramo, cpfOuCnpj, email, next);
             if (favorecidoDTO.isValid) {
-                const createdFavorecido = FavorecidoService.create(favorecidoDTO);
+                const createdFavorecido = await FavorecidoService.create(favorecidoDTO);
                 res.status(201).json(createdFavorecido);
             }
         } catch (error) {
@@ -36,7 +36,7 @@ class FavorecidoController {
             const { nome, ramo, cpfOuCnpj, email } = req.body;
             const favorecidoDTO = new FavorecidoDTO(nome, ramo, cpfOuCnpj, email, next);
             if (favorecidoDTO.isValid) {
-                const updatedFavorecido = FavorecidoService.update(id, favorecidoDTO);
+                const updatedFavorecido = await FavorecidoService.update(id, favorecidoDTO);
                 res.status(200).json(updatedFavorecido);
             }
         } catch (error) {

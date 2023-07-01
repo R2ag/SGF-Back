@@ -18,7 +18,7 @@ class UsuarioController {
             const usuarioDTO = new UsuarioDTO(nome, cpf, email, usuario, senha, next);
 
             if (usuarioDTO.isValid) {
-                const createdUsuario = UsuarioService.create(usuarioDTO);
+                const createdUsuario = await UsuarioService.create(usuarioDTO);
                 res.status(201).json(createdUsuario);
             }
 
@@ -34,7 +34,7 @@ class UsuarioController {
             const usuarioDTO = new UsuarioDTO(nome, cpf, email, usuario, senha, next);
 
             if(usuarioDTO.isValid){
-                const updatedUsuario = UsuarioService.update(id, usuarioDTO);
+                const updatedUsuario = await UsuarioService.update(id, usuarioDTO);
                 res.status(200).json(updatedUsuario);
             }
         } catch (error) {

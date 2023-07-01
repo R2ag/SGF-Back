@@ -1,4 +1,4 @@
-import Sequelize, { QueryTypes } from "sequelize";
+import Sequelize from "sequelize";
 import { Orcamento } from "../models/Orcamento.js";
 import { OrcamentoCategoria } from "../models/OrcamentoCategoria.js";
 
@@ -188,7 +188,7 @@ class OrcamentoService {
                 JOIN categorias ON orcamentoscategorias.categoria_id = categorias.id
             WHERE
                 orcamentos.id = :id
-        `, { replacements: { id: id }, type: QueryTypes.SELECT });
+        `, { replacements: { id: id }, type: Sequelize.QueryTypes.SELECT });
 
         return objs;
     }
@@ -212,7 +212,7 @@ class OrcamentoService {
             GROUP BY 
                 oc.categoria_id, 
                 c.nome
-        `, { replacements: { usuario_id: usuarioId, data_inicio: dataInicio, data_final: dataFinal }, type: QueryTypes.SELECT });
+        `, { replacements: { usuario_id: usuarioId, data_inicio: dataInicio, data_final: dataFinal }, type: Sequelize.QueryTypes.SELECT});
 
         // Calcula a soma de todos os valores obtidos
         const totalGasto = objs.reduce((sum, obj) => sum + obj.totalGasto, 0);

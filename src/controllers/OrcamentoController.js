@@ -70,15 +70,15 @@ class OrcamentoController {
     }
 
     static async findGraficoOfDivisaoDoTotalOrcadoByOrcamento(req, res, next) {
-        const { id } = req.params;
-        OrcamentoService.findGraficoOfDivisaoDoTotalOrcadoByOrcamento(id)
+        const { usuarioId, dataInicio, dataFinal } = req.params;
+        OrcamentoService.findGraficoOfDivisaoDoTotalOrcadoByOrcamento(usuarioId, dataInicio, dataFinal)
             .then(objs => res.json(objs))
             .catch(next);
     }
 
     static async findGraficoOfValoresOrcadosETransacionadosByOrcamento(req, res, next) {
-        const { usuarioId, dataInicio, dataFinal } = req.params;
-        OrcamentoService.findGraficoOfValoresOrcadosETransacionadosByOrcamento(usuarioId, dataInicio, dataFinal)
+        const { id } = req.params;
+        OrcamentoService.findGraficoOfValoresOrcadosETransacionadosByOrcamento(id)
             .then(objs => res.json(objs))
             .catch(next);
     }

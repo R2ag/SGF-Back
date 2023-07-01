@@ -24,8 +24,8 @@ export const dbConfig = {
   },
 };
 
-*/
 
+*/
 // Configuração do bando de dados no ambiente de produção
 export const dbConfig = {
   dialect: 'postgres',
@@ -41,5 +41,7 @@ export const dbConfig = {
   dialectOptions: {
     ssl: true
   }
+
+  
 };
 
