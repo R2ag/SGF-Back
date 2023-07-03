@@ -1,8 +1,13 @@
 import express from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+
 import routes from "./routes.js";
 import errorHandler from "../src/_middleware/error-handler.js";
 import databaseInserts from "../src/config/database-inserts.js";
 
+dotenv.config();
 databaseInserts();
 
 const app = express();
