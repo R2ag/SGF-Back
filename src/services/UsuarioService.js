@@ -1,6 +1,16 @@
 import { Usuario } from "../models/Usuario.js";
 
 class UsuarioService {
+	static async findAll() {
+        try {
+            const objs = await Usuario.findAll();
+            return objs;
+        } catch (error) {
+            console.error("Erro ao buscar todos os usuários:", error);
+            throw error;
+        }
+    }
+	
 	static async findByPk(req) {
 		try {
 			const { id } = req.params;

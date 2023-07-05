@@ -36,6 +36,7 @@ routes.delete('/favorecidos/:id', FavorecidoController.delete);
 routes.get('/tipos', TipoController.findAll);
 
 //Usuário
+routes.get('/usuarios/', UsuarioController.findAll);
 routes.get('/usuarios/:id', UsuarioController.findByPk);
 routes.post('/usuarios', UsuarioController.create);
 routes.put('/usuarios/:id', UsuarioController.update);

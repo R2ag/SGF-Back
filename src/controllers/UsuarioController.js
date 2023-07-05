@@ -4,7 +4,11 @@ import { UsuarioService } from "../services/UsuarioService.js";
 class UsuarioController {
 
 
-    //A classe Usuário não tem a função findAll implementada por conta das regras de negocio.
+    static async findAll(req, res, next) {
+        UsuarioService.findAll()
+            .then(objs => res.json(objs))
+            .catch(next)
+    }
 
     static async findByPk(req, res, next) {
         UsuarioService.findByPk(req)
