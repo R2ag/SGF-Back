@@ -7,7 +7,7 @@ import { QueryTypes } from 'sequelize';
 class TransacaoService {
     static async findAll() {
         try {
-            const objs = await Transacao.findAll();
+            const objs = await Transacao.findAll({ include: { all: true, nested: true } });
             return objs;
         } catch (error) {
             console.error("Erro ao buscar todas as transações:", error);
